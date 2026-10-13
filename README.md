@@ -120,30 +120,6 @@ Cada arquivo de teste fica ao lado do que ele testa (`*.test.ts` / `*.test.tsx`)
 
 **Estilo.** `tokens.css` define cores, fontes e espaçamentos. Os componentes usam essas variáveis. A classe global `.is-scrub` no `<html>` indica que o fundo animado pela rolagem está ligado; as seções ficam transparentes para mostrar esse fundo.
 
-## Como adicionar uma cor
-
-As cores vêm das fotos no **modelo padrão DayBrasil** (PNG de 2000 × 1386 px, placa no centro, aviso e logo embaixo). O script faz o trabalho chato e, principalmente, faz certo:
-
-```bash
-npm run textura -- "C:/caminho/Azul Celeste Brilho.png"
-# azul-celeste-brilho          #5DA9E9  sem perda       3 KB  Azul Celeste Brilho
-```
-
-Ele converte a foto para sRGB usando o perfil de cor embutido, acha a borda da placa, recorta o miolo **sem redimensionar** e salva `src/assets/textures/<id>.webp`. No fim imprime o `id` e o tom médio (`hex`). Depois:
-
-1. Em `src/data/colors.ts`, importe a textura e adicione a entrada **no bloco da família certa** (a ordem do array é a ordem da cartela):
-   ```ts
-   import azulCelesteBrilho from '@/assets/textures/azul-celeste-brilho.webp'
-   // ...
-   { id: 'azul-celeste-brilho', name: 'Azul Celeste Brilho', family: 'azuis', finish: 'Brilho', hex: '#5DA9E9', texture: azulCelesteBrilho },
-   ```
-   - `name`: o nome comercial com acentuação correta (o nome do arquivo às vezes vem sem acento ou com erro).
-   - `finish`: só quando o nome informa (`'Brilho' | 'Metálico' | 'Acetinado' | 'Cintilante' | 'Fosco' | 'Textura'`).
-2. **Família nova?** Inclua o id em `FamilyId` (`src/types/acm.ts`), o nome em `FAMILY_LABEL` e o botão em `CATALOG_FILTERS` (`src/data/families.ts`), e a posição no leque em `FAN_SEQUENCE` (`src/features/hero/fanOrder.ts`).
-3. Rode `npm run check`. Os testes de `src/data/colors.test.ts` acusam id repetido, hex inválido, família inexistente ou família quebrada em dois blocos.
-
-O leque, os filtros, a busca, os contadores ("As 44 cores"), o detalhe e os seletores da fachada se ajustam sozinhos.
-
 ### Fidelidade de cor
 
 - **Perfil de cor:** 8 das 44 fotos originais vêm em **Adobe RGB** (as outras em sRGB). O navegador trabalha em sRGB; sem converter, cores como o Verde Folha e o Vermelho Intenso Brilho saem bem diferentes. O script converte pelo perfil de cada arquivo.
