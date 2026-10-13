@@ -1,0 +1,48 @@
+.footer {
+  --fg: var(--light);
+  --fg-2: var(--light-2);
+  position: relative;
+  padding: clamp(96px, 13vw, 180px) var(--gutter) 36px;
+  background: var(--stage);
+  color: var(--light);
+}
+
+:global(.is-scrub) .footer {
+  background: transparent;
+}
+
+.footer p {
+  color: var(--light-2);
+}
+
+.cta {
+  margin-top: 1.4rem;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(64px, 9vw, 120px);
+  padding-top: 22px;
+  border-top: 3px solid var(--navy);
+}
+
+.disclaimer {
+  max-width: 44rem;
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.disclaimer b {
+  color: var(--light);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .bar {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,6 @@
+/* Sem largura aqui: quem usa o logo define o tamanho (evita disputa de especificidade). */
+.logo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

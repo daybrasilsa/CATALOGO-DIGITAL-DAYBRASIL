@@ -1,0 +1,35 @@
+.header {
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
+  gap: 1rem clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--display-l);
+  line-height: 0.9;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.025em;
+}
+
+.stacked .title {
+  margin-bottom: 1rem;
+  font-size: clamp(2.3rem, 4.2vw, 3.8rem);
+}
+
+.body p {
+  margin: 0;
+  max-width: 28rem;
+}
+
+@media (max-width: 860px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

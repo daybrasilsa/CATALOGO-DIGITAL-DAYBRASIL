@@ -1,0 +1,80 @@
+.section {
+  position: relative;
+  padding: clamp(88px, 12vw, 170px) var(--gutter) clamp(72px, 9vw, 130px);
+  background: var(--booth);
+  color: var(--ink);
+}
+
+/* Com a animação de rolagem ligada, o fundo vem do body (que muda de escuro para cinza) */
+:global(.is-scrub) .section {
+  background: transparent;
+  color: var(--fg);
+}
+
+.header p {
+  color: var(--ink-2);
+}
+
+:global(.is-scrub) .header p {
+  color: var(--fg-2);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.count {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-stretch: 87.5%;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  padding: 2rem 0 1rem;
+}
+
+.empty p {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.reset {
+  padding: 0.55rem 1rem;
+  border: 1px solid rgb(11 22 40 / 0.35);
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reset:hover {
+  border-color: var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: clamp(1.75rem, 3vw, 2.75rem) clamp(1rem, 2vw, 1.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0.9rem;
+  }
+}

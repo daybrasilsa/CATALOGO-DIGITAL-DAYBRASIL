@@ -1,0 +1,153 @@
+.dialog {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.dialog::backdrop {
+  background: rgb(11 22 40 / 0.55);
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: center;
+  height: 100%;
+  overflow-y: auto;
+  padding: clamp(72px, 10vh, 110px) var(--gutter) clamp(32px, 6vh, 64px);
+  background: var(--booth);
+}
+
+.stage {
+  position: relative;
+}
+
+.wrap {
+  position: relative;
+  will-change: transform;
+}
+
+.swatch {
+  border-radius: 14px;
+  box-shadow:
+    0 3px 0 0 var(--alu-edge),
+    0 6px 0 0 var(--alu-core),
+    0 8px 0 0 var(--alu-shadow),
+    0 40px 60px -28px rgb(11 22 40 / 0.7);
+}
+
+/* Nova cor entrando por cima da atual (animada com clip-path) */
+.incoming {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  clip-path: inset(0 100% 0 0 round 14px);
+  pointer-events: none;
+}
+
+.info {
+  max-width: 32rem;
+}
+
+.family {
+  margin: 0 0 0.6rem;
+  color: var(--ink-2);
+  font-weight: 560;
+}
+
+.name {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2.2rem, 4.8vw, 4.4rem);
+  line-height: 0.92;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.02em;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.45rem 1.5rem;
+  margin: 0 0 1.25rem;
+}
+
+/* div só agrupa dt/dd (HTML válido); display: contents mantém o grid */
+.row {
+  display: contents;
+}
+
+.specs dt {
+  color: var(--ink-2);
+}
+
+.specs dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.hex {
+  font-stretch: 80%;
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  max-width: 30rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgb(11 22 40 / 0.3);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 560;
+  cursor: pointer;
+}
+
+.pill:hover {
+  border-color: var(--ink);
+}
+
+.count {
+  font-stretch: 80%;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.close {
+  position: absolute;
+  top: clamp(16px, 3vh, 28px);
+  right: var(--gutter);
+  background: var(--alu);
+}
+
+@media (max-width: 640px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+  }
+}

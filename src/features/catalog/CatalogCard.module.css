@@ -1,0 +1,67 @@
+.item {
+  display: block;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.button:focus-visible {
+  outline: none;
+}
+
+.button:focus-visible .swatch {
+  box-shadow:
+    0 0 0 3px var(--booth),
+    0 0 0 5px var(--ink),
+    0 22px 30px -16px rgb(11 22 40 / 0.6);
+}
+
+.meta {
+  display: block;
+  margin-top: 1.05rem;
+}
+
+.name {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.5);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.hex {
+  font-stretch: 80%;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .name {
+    font-size: 0.97rem;
+  }
+}

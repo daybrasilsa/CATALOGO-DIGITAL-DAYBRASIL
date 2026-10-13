@@ -1,0 +1,66 @@
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 26rem);
+}
+
+.icon {
+  position: absolute;
+  left: 0.85rem;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  padding: 0.7rem 2.6rem 0.7rem 2.5rem;
+  border: 1px solid rgb(11 22 40 / 0.28);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.35);
+  font-size: 1rem;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.input::placeholder {
+  color: var(--ink-2);
+  opacity: 0.8;
+}
+
+/* O "x" nativo do type=search some: usamos o nosso, que funciona igual em todo navegador */
+.input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--ink);
+  background: rgb(255 255 255 / 0.6);
+  box-shadow: 0 0 0 3px rgb(11 22 40 / 0.18);
+}
+
+.clear {
+  position: absolute;
+  right: 0.4rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.clear:hover {
+  background: rgb(11 22 40 / 0.08);
+}

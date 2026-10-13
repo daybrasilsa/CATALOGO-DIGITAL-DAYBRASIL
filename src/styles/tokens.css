@@ -1,0 +1,52 @@
+/*
+ * Tokens de design. Toda cor, fonte e espaçamento global sai daqui.
+ * As animações de "acender a luz" leem --stage, --booth etc. em tempo de execução,
+ * então mudar aqui muda no site inteiro.
+ */
+:root {
+  /* Marca DayBrasil (valores do logo vetorial original) */
+  --navy: #18457a;
+  --red: #e52b27;
+
+  /* Ambientes */
+  --stage: #0b1628; /* palco escuro (hero e rodapé) */
+  --stage-2: #13233d;
+  --booth: #b4b5b2; /* cinza neutro N7, como em cabine de luz: compara cor sem viés */
+  --sky-top: #93aac0;
+  --sky-mid: #b9c8d5;
+  --sky-low: #dce2e6;
+
+  /* Texto */
+  --ink: #0b1628;
+  --ink-2: #353e4c;
+  --light: #eef1f5;
+  --light-2: #a7b3c4;
+
+  /* Alumínio (botões, placa do logo, miolo do leque) */
+  --alu: #e6e8ea;
+  --alu-edge: #aeb4ba;
+  --alu-core: #23272d;
+  --alu-shadow: #8f969d;
+
+  /* Valores animados ao rolar a página (veja useStageLighting) */
+  --bg: var(--stage);
+  --fg: var(--light);
+  --fg-2: var(--light-2);
+
+  /* Tipografia */
+  --font: 'Archivo Variable', 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-base: 1.0625rem;
+  --display-xl: clamp(2.6rem, 7.2vw, 7.4rem);
+  --display-l: clamp(2.4rem, 6vw, 5.6rem);
+
+  /* Layout */
+  --gutter: clamp(16px, 4vw, 56px);
+
+  /* Movimento */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Borda de placa ACM: alumínio / núcleo / alumínio + sombra projetada */
+  --plate-edge:
+    0 2px 0 0 var(--alu-edge), 0 4px 0 0 var(--alu-core), 0 5px 0 0 var(--alu-shadow),
+    0 22px 30px -16px rgb(11 22 40 / 0.6);
+}

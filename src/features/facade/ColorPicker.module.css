@@ -1,0 +1,81 @@
+.fieldset {
+  min-width: 0;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 0.7rem;
+  padding: 0;
+  font-weight: 650;
+}
+
+.output {
+  font-weight: 500;
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(26px, 1fr));
+  gap: 6px;
+}
+
+.chip {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* Input invisível por cima da amostra: continua clicável e focável */
+.chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.face {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    0 1.5px 0 var(--alu-edge),
+    0 3px 0 var(--alu-core),
+    0 6px 10px -6px rgb(11 22 40 / 0.6);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.chip:hover .face {
+  transform: translateY(-2px);
+}
+
+.chip input:checked + .face {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px var(--red),
+    0 8px 14px -6px rgb(11 22 40 / 0.6);
+}
+
+.chip input:focus-visible + .face {
+  outline: 2px solid var(--ink);
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .face {
+    transition: none;
+  }
+}

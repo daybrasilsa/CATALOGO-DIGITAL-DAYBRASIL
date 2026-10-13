@@ -1,0 +1,72 @@
+.swatch {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.6;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow: var(--plate-edge);
+  transition:
+    transform 0.6s var(--ease-out),
+    box-shadow 0.6s var(--ease-out);
+}
+
+.swatch[data-live] {
+  transition:
+    transform 0.12s linear,
+    box-shadow 0.3s;
+}
+
+/* Brilho difuso que acompanha o cursor */
+.sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    circle at var(--mx, 22%) var(--my, 12%),
+    rgb(255 255 255 / var(--sheen-gain, 0.35)),
+    rgb(255 255 255 / 0) 58%
+  );
+  opacity: 0.55;
+  transition: opacity 0.4s;
+}
+
+.swatch[data-live] .sheen {
+  opacity: 1;
+}
+
+/* Reflexo nítido: só nos acabamentos brilho */
+.glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: linear-gradient(
+    115deg,
+    rgb(255 255 255 / 0) 40%,
+    rgb(255 255 255 / 0.38) 47%,
+    rgb(255 255 255 / 0) 54%
+  );
+  background-size: 260% 100%;
+  background-position: calc(100% - var(--mx, 22%)) 0;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.swatch[data-finish='brilho'] .glare {
+  opacity: 0.45;
+}
+
+.swatch[data-finish='brilho'][data-live] .glare {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatch {
+    transition: none;
+  }
+}

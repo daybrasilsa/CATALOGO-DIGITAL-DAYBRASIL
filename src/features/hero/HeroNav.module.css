@@ -1,0 +1,56 @@
+.nav {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 18px var(--gutter);
+}
+
+.home {
+  display: inline-block;
+  padding: 4px;
+  margin: -4px;
+  border-radius: 6px;
+}
+
+/* Logo solto sobre o palco (versão negativa, sem plaquinha branca) */
+.logo {
+  width: clamp(76px, 7vw, 104px);
+  filter: drop-shadow(0 6px 18px rgb(0 0 0 / 0.35));
+}
+
+.links {
+  display: flex;
+  gap: clamp(0.9rem, 2.4vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  font-weight: 560;
+  font-size: 0.9688rem;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+@media (max-width: 640px) {
+  .links {
+    gap: 0.9rem;
+  }
+
+  .links a {
+    font-size: 0.875rem;
+  }
+
+  .logo {
+    width: 72px;
+  }
+}

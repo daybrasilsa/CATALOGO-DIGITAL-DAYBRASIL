@@ -1,0 +1,66 @@
+.hero {
+  --fg: var(--light);
+  --fg-2: var(--light-2);
+  position: relative;
+  isolation: isolate;
+  min-height: max(700px, 100svh);
+  /* clip (e não hidden): hidden ainda deixa o navegador rolar o hero ao focar uma lâmina */
+  overflow: hidden;
+  overflow: clip;
+  background: var(--stage);
+  color: var(--light);
+}
+
+:global(.is-scrub) .hero {
+  background: transparent;
+}
+
+.copy {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 25rem);
+  gap: 1.5rem clamp(2rem, 5vw, 5rem);
+  align-items: end;
+  padding: clamp(104px, 15vh, 140px) var(--gutter) 0;
+}
+
+.title {
+  font-size: var(--display-xl);
+}
+
+.side p {
+  max-width: 25rem;
+  margin: 0 0 1.4rem;
+  color: var(--light-2);
+}
+
+.side strong {
+  color: var(--light);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.textLink {
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.textLink:hover {
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 860px) {
+  .copy {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

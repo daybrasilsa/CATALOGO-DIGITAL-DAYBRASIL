@@ -1,0 +1,26 @@
+/* Sem font-size aqui: o tamanho vem do className de quem usa. */
+.title {
+  margin: 0;
+  line-height: 0.9;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.025em;
+}
+
+/* overflow escondido: as letras sobem "de dentro" da linha */
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* --w é animado pelo GSAP de 62 (estreita) até 125 (expandida) */
+.char {
+  display: inline-block;
+  font-variation-settings: 'wdth' var(--w, 125);
+}

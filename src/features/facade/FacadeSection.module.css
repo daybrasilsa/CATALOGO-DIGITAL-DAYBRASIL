@@ -1,0 +1,61 @@
+.section {
+  position: relative;
+  overflow: clip;
+  padding: clamp(88px, 11vw, 160px) var(--gutter) 0;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-low) 100%);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(17rem, 22rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: end;
+}
+
+.head p {
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  color: var(--ink-2);
+}
+
+.pickers {
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* Calçada */
+.ground {
+  height: clamp(22px, 3.2vw, 44px);
+  margin: 0 calc(var(--gutter) * -1);
+  background: linear-gradient(180deg, #cfcdc8 0 4px, #a9a7a2 4px, #8f8d88 100%);
+}
+
+/* No celular: título, fachada fixa no topo enquanto rola e seletores embaixo */
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .side {
+    display: contents;
+  }
+
+  .head {
+    order: 1;
+  }
+
+  .scene {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    order: 2;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 12px var(--gutter) 0;
+    background: #acbdcd;
+  }
+
+  .pickers {
+    order: 3;
+    padding-top: 1.75rem;
+  }
+}

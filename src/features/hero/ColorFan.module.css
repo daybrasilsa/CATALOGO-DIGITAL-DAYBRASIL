@@ -1,0 +1,224 @@
+/* Camada do tamanho do hero: abriga o holofote e o pivô do leque */
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Holofote que acompanha a luz (atrás de tudo no hero) */
+.spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      60vmax 60vmax at var(--sx, 50%) var(--sy, 80%),
+      rgb(96 140 206 / 0.26),
+      rgb(96 140 206 / 0) 60%
+    ),
+    radial-gradient(120% 70% at 50% 110%, rgb(22 68 122 / 0.55), rgb(22 68 122 / 0) 70%);
+}
+
+/* Pivô do leque: ponto de largura zero no rodapé do hero */
+.fan {
+  --R: clamp(230px, min(58svh, 46vw), 660px);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  /* Deslizar na vertical continua rolando a página; na horizontal, gira o leque */
+  touch-action: pan-y;
+}
+
+/* Disco que gira: origem no pivô (0, 0) */
+.wheel {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.blade {
+  --bw: calc(var(--R) * 0.17);
+  position: absolute;
+  left: calc(var(--bw) / -2);
+  bottom: calc(var(--bw) / -2);
+  z-index: var(--z);
+  width: var(--bw);
+  height: var(--R);
+  padding: 0;
+  border: 0;
+  background: none;
+  /* O cursor vem do arrasto (mão aberta / fechada) */
+  cursor: inherit;
+  pointer-events: auto;
+  transform-origin: 50% calc(100% - var(--bw) / 2);
+  transform: rotate(var(--a));
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Lâmina em foco, hover ou no topo sai do leque e vai para frente */
+.blade:hover,
+.blade:focus-visible,
+.blade[data-active] {
+  z-index: 60;
+}
+
+.blade:focus-visible {
+  outline: none;
+}
+
+.body {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: calc(var(--bw) * 0.14) calc(var(--bw) * 0.14) calc(var(--bw) / 2)
+    calc(var(--bw) / 2);
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    -10px 0 22px -8px rgb(0 0 0 / 0.6),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  transition:
+    transform 0.5s var(--ease-out),
+    box-shadow 0.5s var(--ease-out);
+}
+
+/* Chanfro lateral: dá volume à lâmina */
+.body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0.1),
+    rgb(255 255 255 / 0) 28%,
+    rgb(0 0 0 / 0) 70%,
+    rgb(0 0 0 / 0.22)
+  );
+}
+
+.blade:hover .body,
+.blade:focus-visible .body,
+.blade[data-active] .body {
+  transform: translateY(-9%);
+  box-shadow:
+    -14px 0 30px -8px rgb(0 0 0 / 0.7),
+    inset 0 0 0 1px rgb(255 255 255 / 0.16);
+}
+
+.blade:focus-visible .body {
+  box-shadow:
+    0 0 0 2px var(--light),
+    -14px 0 30px -8px rgb(0 0 0 / 0.7);
+}
+
+/* Reflexo: --hl (intensidade) e --hy (posição) vêm do cálculo de luz em JS */
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    160% 20% at 50% calc(var(--hy, 0.3) * 100%),
+    rgb(255 255 255 / 0.95),
+    rgb(255 255 255 / 0) 72%
+  );
+  opacity: var(--hl, 0);
+}
+
+/* Nome na ponta da lâmina; lado esquerdo não gira 180° para não ficar de cabeça para baixo */
+.name {
+  position: absolute;
+  top: calc(var(--bw) * 0.32);
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  font-size: clamp(9px, calc(var(--R) * 0.022), 13px);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.blade[data-side='left'] .name {
+  transform: translateX(-50%);
+}
+
+.onDark {
+  color: rgb(255 255 255 / 0.88);
+}
+
+.onLight {
+  color: rgb(11 22 40 / 0.82);
+}
+
+/* Miolo de alumínio escovado com o nome da lâmina em foco */
+.hub {
+  --hw: max(150px, calc(var(--R) * 0.5));
+  position: absolute;
+  left: calc(var(--hw) / -2);
+  bottom: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: var(--hw);
+  height: calc(var(--hw) / 2);
+  padding: 0 14px calc(var(--hw) * 0.07);
+  border-radius: 999px 999px 0 0;
+  color: var(--ink);
+  text-align: center;
+  background:
+    repeating-radial-gradient(
+      circle at 50% 100%,
+      rgb(255 255 255 / 0) 0 2px,
+      rgb(0 0 0 / 0.035) 2px 3px
+    ),
+    radial-gradient(circle at 50% 135%, #f4f6f7 0%, #cbd0d5 55%, #9ca3aa 100%);
+  box-shadow:
+    0 -14px 36px rgb(0 0 0 / 0.55),
+    inset 0 2px 0 rgb(255 255 255 / 0.8);
+}
+
+.hubName {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 2.3em;
+  font-size: clamp(0.8rem, calc(var(--R) * 0.03), 1.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.hubSub {
+  min-height: 1.3em;
+  font-size: 0.75rem;
+  font-stretch: 87.5%;
+  color: var(--ink-2);
+}
+
+/* Tablet em pé: a tela é alta, o leque pode crescer */
+@media (max-width: 860px) {
+  .fan {
+    --R: clamp(240px, min(70vw, 46svh), 520px);
+  }
+}
+
+@media (max-width: 640px) {
+  .fan {
+    --R: clamp(220px, min(84vw, 46svh), 380px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body {
+    transition: none;
+  }
+}
