@@ -10,6 +10,7 @@ Guia curto para o time trabalhar no mesmo ritmo. Na dúvida, pergunte no PR.
 | `develop`   | Integração do que vai para a próxima versão      | `main`    | `main` (via release) |
 | `feature/*` | Uma funcionalidade (ex.: `feature/link-por-cor`) | `develop` | `develop`            |
 | `fix/*`     | Correção que pode esperar a próxima versão       | `develop` | `develop`            |
+| `chore/*`   | Manutenção (configuração, dependências)          | `develop` | `develop`            |
 | `release/*` | Preparar uma versão (ex.: `release/0.2.0`)       | `develop` | `main` e `develop`   |
 | `hotfix/*`  | Correção urgente em produção                     | `main`    | `main` e `develop`   |
 
