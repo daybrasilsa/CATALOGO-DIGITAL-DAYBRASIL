@@ -34,6 +34,11 @@ const START_COLOR_ID = 'branco-neve'
 /** Um clique logo depois de um arrasto não abre a cor (foi o fim do gesto, não um clique). */
 const CLICK_AFTER_DRAG_MS = 250
 
+/** Escreve a variável CSS só se o valor mudou: escrever o mesmo valor também custa um recálculo. */
+function setVar(element: HTMLElement, name: string, value: string): void {
+  if (element.style.getPropertyValue(name) !== value) element.style.setProperty(name, value)
+}
+
 interface ColorFanProps {
   /** Cores já na ordem do leque (veja fanOrder). */
   colors: readonly AcmColor[]
@@ -54,10 +59,12 @@ interface ColorFanProps {
  */
 export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanProps) {
   const layerRef = useRef<HTMLDivElement>(null)
+  const spotlightRef = useRef<HTMLDivElement>(null)
   const fanRef = useRef<HTMLDivElement>(null)
   const wheelRef = useRef<HTMLDivElement>(null)
   const bladeRefs = useRef<(HTMLButtonElement | null)[]>([])
   const bodyRefs = useRef<(HTMLSpanElement | null)[]>([])
+  const sheenRefs = useRef<(HTMLSpanElement | null)[]>([])
   const proxyRef = useRef<HTMLDivElement | null>(null)
   const rotation = useRef(0)
   const light = useRef({ x: 0, y: -300 })
@@ -84,26 +91,30 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
 
   /** Repinta reflexos, lado do nome e lâmina da vez para a rotação e a luz atuais. */
   const paint = useCallback(() => {
+    // Primeiro todas as leituras de medida, depois todas as escritas: medir depois de escrever
+    // obriga o navegador a recalcular o estilo na hora, no meio do quadro.
     const R = bladeRefs.current[0]?.offsetHeight ?? 400
+    const f = fanRef.current?.getBoundingClientRect()
+    const l = layerRef.current?.getBoundingClientRect()
     const { x, y } = light.current
     bladeRefs.current.forEach((blade, i) => {
+      const sheen = sheenRefs.current[i]
       const color = colors[i]
       const base = baseAngles[i]
-      if (!blade || !color || base === undefined) return
+      if (!blade || !sheen || !color || base === undefined) return
       const world = base + rotation.current
       const { intensity, position } = bladeHighlight(world, x, y, R, lightProfile(color))
-      blade.style.setProperty('--hl', intensity.toFixed(3))
-      blade.style.setProperty('--hy', position.toFixed(3))
+      // Variáveis no próprio reflexo: no botão, elas seriam herdadas e recalculariam a lâmina inteira.
+      setVar(sheen, '--hl', intensity.toFixed(3))
+      setVar(sheen, '--hy', position.toFixed(3))
       // Nome sempre legível: do lado esquerdo o texto não gira 180°.
-      blade.dataset.side = world < 0 ? 'left' : 'right'
+      const side = world < 0 ? 'left' : 'right'
+      if (blade.dataset.side !== side) blade.dataset.side = side
     })
-    const layer = layerRef.current
-    const fan = fanRef.current
-    if (layer && fan) {
-      const f = fan.getBoundingClientRect()
-      const l = layer.getBoundingClientRect()
-      layer.style.setProperty('--sx', `${(((f.left + x - l.left) / l.width) * 100).toFixed(1)}%`)
-      layer.style.setProperty('--sy', `${(((f.top + y - l.top) / l.height) * 100).toFixed(1)}%`)
+    const spotlight = spotlightRef.current
+    if (spotlight && f && l) {
+      setVar(spotlight, '--sx', `${(((f.left + x - l.left) / l.width) * 100).toFixed(1)}%`)
+      setVar(spotlight, '--sy', `${(((f.top + y - l.top) / l.height) * 100).toFixed(1)}%`)
     }
     const top = indexAtTop(rotation.current, count, STEP)
     setActiveIndex((current) => (current === top ? current : top))
@@ -113,8 +124,9 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
   const applyRotation = useCallback(
     (degrees: number) => {
       rotation.current = degrees
-      if (wheelRef.current) wheelRef.current.style.transform = `rotate(${degrees}deg)`
+      // Pinta antes de girar: o paint() mede a página, e a medida precisa vir antes das escritas.
       paint()
+      if (wheelRef.current) wheelRef.current.style.transform = `rotate(${degrees}deg)`
     },
     [paint],
   )
@@ -345,7 +357,12 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
 
   return (
     <div ref={layerRef} className={styles.layer} data-anim="fan-layer">
-      <div className={styles.spotlight} data-anim="spotlight" aria-hidden="true" />
+      <div
+        ref={spotlightRef}
+        className={styles.spotlight}
+        data-anim="spotlight"
+        aria-hidden="true"
+      />
       <div
         ref={fanRef}
         className={styles.fan}
@@ -394,7 +411,13 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
                   className={styles.body}
                   style={textureStyle(color)}
                 >
-                  <span className={styles.sheen} aria-hidden="true" />
+                  <span
+                    ref={(el) => {
+                      sheenRefs.current[i] = el
+                    }}
+                    className={styles.sheen}
+                    aria-hidden="true"
+                  />
                   <span
                     className={`${styles.name} ${isLightSurface(color.hex) ? styles.onLight : styles.onDark}`}
                   >
