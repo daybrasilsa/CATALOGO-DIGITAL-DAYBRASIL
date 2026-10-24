@@ -72,7 +72,6 @@ export function CatalogSection({
       Flip.from(state, {
         duration: 0.7,
         ease: 'power3.inOut',
-        absolute: true,
         stagger: 0.01,
         onEnter: (els) =>
           gsap.fromTo(
