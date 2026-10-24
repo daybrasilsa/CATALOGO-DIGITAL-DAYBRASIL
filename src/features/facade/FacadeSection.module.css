@@ -2,6 +2,9 @@
   position: relative;
   overflow: clip;
   padding: clamp(88px, 11vw, 160px) var(--gutter) 0;
+  /* Superfície clara: texto e foco dos botões em tinta escura, sem depender do --fg da página */
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
   color: var(--ink);
   background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-low) 100%);
 }

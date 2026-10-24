@@ -7,6 +7,9 @@
   padding: 0;
   border: 0;
   background: transparent;
+  /* Superfície clara: texto e foco dos botões em tinta escura, sem depender do --fg da página */
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
   color: var(--ink);
   overflow: hidden;
 }
