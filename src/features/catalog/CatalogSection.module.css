@@ -72,6 +72,16 @@
   list-style: none;
 }
 
+/*
+ * Quando as placas entram na tela, a luz já acendeu: o texto delas fica escuro direto.
+ * Assim, a animação da luz recalcula só o topo da cartela, não as 44 placas.
+ */
+:global(.is-scrub) .grid {
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  color: var(--ink);
+}
+
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
