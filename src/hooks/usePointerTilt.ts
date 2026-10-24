@@ -1,7 +1,10 @@
 import { type RefObject, useEffect } from 'react'
 
 interface PointerTiltOptions {
-  /** Liga o efeito (normalmente: só com mouse). */
+  /**
+   * Liga o efeito. Com mouse, vale em qualquer elemento. Para funcionar com o dedo, o elemento
+   * precisa de `touch-action: none`; senão o navegador usa o arrasto para rolar a página.
+   */
   enabled: boolean
   /** Inclina a placa em 3D. Desligue com movimento reduzido: o brilho continua seguindo o cursor. */
   tilt: boolean
@@ -11,7 +14,7 @@ const MAX_TILT_X = 9
 const MAX_TILT_Y = 12
 
 /**
- * Brilho e inclinação que seguem o cursor.
+ * Brilho e inclinação que seguem o cursor ou o dedo.
  * Escreve variáveis CSS direto no elemento (sem setState), para não re-renderizar a cada movimento do mouse.
  *
  * Variáveis: --mx, --my (posição do brilho), --rx, --ry (inclinação). Atributo: data-live.
@@ -43,9 +46,12 @@ export function usePointerTilt(
       for (const prop of ['--mx', '--my', '--rx', '--ry']) surface.style.removeProperty(prop)
     }
 
+    // Com o dedo não há movimento antes do toque: a placa reage já ao encostar.
+    target.addEventListener('pointerdown', onMove)
     target.addEventListener('pointermove', onMove)
     target.addEventListener('pointerleave', onLeave)
     return () => {
+      target.removeEventListener('pointerdown', onMove)
       target.removeEventListener('pointermove', onMove)
       target.removeEventListener('pointerleave', onLeave)
       onLeave()
