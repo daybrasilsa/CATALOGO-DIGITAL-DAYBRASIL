@@ -31,15 +31,23 @@ export function SectionHeader({
   useGSAP(
     () => {
       if (!motion) return
+      const words = gsap.utils.toArray<HTMLElement>('[data-anim="word"]')
       const chars = gsap.utils.toArray<HTMLElement>('[data-anim="char"]')
       const body = gsap.utils.toArray<HTMLElement>('[data-anim="header-body"]')
-      gsap.set(chars, { '--w': 62, yPercent: 105, opacity: 0 })
+      // Letras escondidas, mas ainda na largura final: a página é montada com a altura certa.
+      gsap.set(chars, { yPercent: 105, opacity: 0 })
       gsap.set(body, { y: 18, opacity: 0 })
       gsap
         .timeline({ scrollTrigger: { trigger: ref.current, start: 'top 82%', once: true } })
+        // Trava a largura final de cada palavra antes de estreitar as letras: assim a quebra de
+        // linha já fica onde vai terminar e o texto não pula de linha no meio da animação.
+        .set(words, { width: (_: number, el: HTMLElement) => el.getBoundingClientRect().width }, 0)
+        .set(chars, { '--w': 62 }, 0)
         .to(chars, { yPercent: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.025 }, 0)
         .to(chars, { '--w': 125, duration: 1.2, ease: 'expo.inOut', stagger: 0.025 }, 0.05)
         .to(body, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, 0.35)
+        // No fim, solta as larguras: o título volta a se ajustar se a tela mudar de tamanho.
+        .set(words, { clearProps: 'width' })
     },
     { scope: ref, dependencies: [motion] },
   )

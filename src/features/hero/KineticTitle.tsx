@@ -22,7 +22,7 @@ export function KineticTitle({ id, lines, as: Tag = 'h1', className }: KineticTi
         <span key={line} className={styles.line} aria-hidden="true">
           {line.split(' ').map((word, wordIndex, words) => (
             <Fragment key={`${word}-${wordIndex}`}>
-              <span className={styles.word}>
+              <span className={styles.word} data-anim="word">
                 {Array.from(word).map((char, charIndex) => (
                   <span key={charIndex} className={styles.char} data-anim="char">
                     {char}
