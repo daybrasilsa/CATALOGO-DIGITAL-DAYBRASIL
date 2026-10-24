@@ -123,7 +123,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  mix-blend-mode: screen;
+  /* Camada própria: o reflexo muda a cada quadro sem redesenhar o leque inteiro */
+  will-change: opacity;
   background: radial-gradient(
     160% 20% at 50% calc(var(--hy, 0.3) * 100%),
     rgb(255 255 255 / 0.95),
