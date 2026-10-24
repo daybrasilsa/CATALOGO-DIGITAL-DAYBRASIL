@@ -3,7 +3,7 @@ import { PlateButton } from '@/components/PlateButton/PlateButton'
 import { Swatch } from '@/components/Swatch/Swatch'
 import { SITE } from '@/config/site'
 import { FAMILY_LABEL } from '@/data/families'
-import { useFinePointer, usePrefersReducedMotion } from '@/hooks/useMediaQuery'
+import { usePrefersReducedMotion } from '@/hooks/useMediaQuery'
 import { usePointerTilt } from '@/hooks/usePointerTilt'
 import { textureStyle } from '@/lib/color'
 import { gsap, useGSAP } from '@/lib/gsap'
@@ -46,10 +46,10 @@ export function ColorDetailDialog({
   const lastFocus = useRef<HTMLElement | null>(null)
   const direction = useRef<1 | -1>(1)
   const motion = !usePrefersReducedMotion()
-  const finePointer = useFinePointer()
   const isOpen = color !== null
   // A placa só existe com o diálogo aberto: o efeito precisa religar a cada abertura.
-  usePointerTilt(swatchRef, swatchRef, { enabled: finePointer && isOpen, tilt: motion })
+  // Funciona com mouse e com o dedo (o CSS da chapa reserva o arrasto para a inclinação).
+  usePointerTilt(swatchRef, swatchRef, { enabled: isOpen, tilt: motion })
 
   // `shown` é a cor que está por inteiro na placa grande. Quando `color` muda com o
   // diálogo aberto, a nova cor entra por cima numa "cortina" e só depois vira `shown`.

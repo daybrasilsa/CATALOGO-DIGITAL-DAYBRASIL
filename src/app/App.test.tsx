@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { ACM_COLORS } from '@/data/colors'
@@ -45,6 +45,28 @@ describe('App', () => {
 
     await user.click(within(dialog).getByRole('button', { name: /Fechar/ }))
     expect(dialog).not.toHaveAttribute('open')
+  })
+
+  it('no detalhe, o dedo move o reflexo da chapa; com "reduzir movimento", ela não inclina', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const grid = screen.getByRole('list', { name: 'Cores da cartela' })
+    await user.click(within(grid).getByRole('button', { name: 'Azul Royal. Ampliar' }))
+
+    const dialog = screen.getByRole('dialog', { name: 'Azul Royal' })
+    const plate = dialog.querySelector<HTMLElement>('[data-finish]')
+    if (!plate) throw new Error('chapa do detalhe não encontrada')
+    // O jsdom não calcula tamanhos: a chapa ganha 400 × 250 px para a conta de posição.
+    plate.getBoundingClientRect = () => ({ left: 0, top: 0, width: 400, height: 250 }) as DOMRect
+
+    fireEvent.pointerDown(plate, { pointerType: 'touch', clientX: 300, clientY: 50 })
+    expect(plate).toHaveAttribute('data-live')
+    expect(plate.style.getPropertyValue('--mx')).toBe('75.0%')
+    expect(plate.style.getPropertyValue('--my')).toBe('20.0%')
+    expect(plate.style.getPropertyValue('--rx')).toBe('')
+
+    fireEvent.pointerLeave(plate, { pointerType: 'touch' })
+    expect(plate).not.toHaveAttribute('data-live')
   })
 
   it('troca a cor principal da fachada', async () => {

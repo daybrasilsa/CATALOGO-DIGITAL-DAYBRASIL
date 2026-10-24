@@ -41,6 +41,8 @@
 
 .swatch {
   border-radius: 14px;
+  /* No celular, arrastar o dedo sobre a chapa inclina a chapa em vez de rolar o detalhe */
+  touch-action: none;
   box-shadow:
     0 3px 0 0 var(--alu-edge),
     0 6px 0 0 var(--alu-core),
