@@ -51,8 +51,10 @@ import vinhoCintilante from '@/assets/textures/vinho-cintilante.webp'
  * A ORDEM deste array é a ordem de exibição na cartela (agrupada por família).
  * Para adicionar uma cor, siga o passo a passo do README ("Como adicionar uma cor").
  *
- * `hex` é o tom médio da foto de cada placa, já convertido para sRGB pelo script
- * `npm run textura`: serve para a interface, não como referência de especificação.
+ * `hex` é o tom médio da textura de cada placa, impresso pelo script `npm run textura`
+ * (em sRGB e já com a correção de tom da tabela TONE_FIXES, quando houver). Não aparece
+ * escrito na tela: é o fundo enquanto a textura carrega e decide texto claro ou escuro,
+ * a ordem do leque e o contraste da fachada. Não é referência de especificação.
  */
 export const ACM_COLORS: readonly AcmColor[] = [
   // Brancos
@@ -110,7 +112,7 @@ export const ACM_COLORS: readonly AcmColor[] = [
     name: 'Vermelho Intenso Brilho',
     family: 'vermelhos',
     finish: 'Brilho',
-    hex: '#F40000',
+    hex: '#BA211B',
     texture: vermelhoIntensoBrilho,
   },
   {
@@ -143,7 +145,7 @@ export const ACM_COLORS: readonly AcmColor[] = [
     name: 'Azul Marinho Brilho',
     family: 'azuis',
     finish: 'Brilho',
-    hex: '#3D28CD',
+    hex: '#10286B',
     texture: azulMarinhoBrilho,
   },
   {

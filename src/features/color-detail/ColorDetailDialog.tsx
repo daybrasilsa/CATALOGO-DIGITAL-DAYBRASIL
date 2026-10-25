@@ -199,10 +199,6 @@ export function ColorDetailDialog({
                   <dd>{color.finish}</dd>
                 </div>
               ) : null}
-              <div className={styles.row}>
-                <dt>Tom na tela</dt>
-                <dd className={styles.hex}>≈ {color.hex}</dd>
-              </div>
             </dl>
             <p className={styles.note}>{SITE.colorNote}</p>
             <PlateButton onClick={() => requestClose(() => onShowOnFacade(color.id))}>

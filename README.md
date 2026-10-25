@@ -125,7 +125,8 @@ Cada arquivo de teste fica ao lado do que ele testa (`*.test.ts` / `*.test.tsx`)
 - **Perfil de cor:** 8 das 44 fotos originais vêm em **Adobe RGB** (as outras em sRGB). O navegador trabalha em sRGB; sem converter, cores como o Verde Folha e o Vermelho Intenso Brilho saem bem diferentes. O script converte pelo perfil de cada arquivo.
 - **Compressão:** placas lisas são salvas **sem perda** (pixels idênticos à foto, poucos KB). Texturas (madeiras, metálicos, concreto) usam WebP qualidade 90: sem perda ficariam com 300 a 800 KB cada.
 - **Conferência feita na v0.2:** cada textura comparada pixel a pixel com a foto original. 21 das 44 são idênticas; a maior diferença na cor média é ΔE 0,42 (abaixo de 1, o olho não percebe). Nenhuma textura trocada de nome: cada uma bate com a própria foto com folga grande sobre a segunda mais parecida (madeiras incluídas).
-- Total das 44 texturas: ~2,2 MB. Enquanto uma imagem carrega, a placa mostra o `hex` da cor.
+- **Correção de tom:** quando a imagem da pasta oficial não bate com a chapa física, o id da cor entra na tabela `TONE_FIXES` do script com o tom certo. O script desloca a cor de todos os pixels (em Lab) até a média virar esse tom, sem mexer no desenho (reflexo, veio, granulado). Só entra o que foi conferido na chapa física. Hoje, as duas com o tom da versão convencional (decisão de 25/10/2026): Azul Marinho Brilho (a imagem da pasta é roxa; chapa conferida) e Vermelho Intenso Brilho (a imagem é saturada demais; aprovado pelo mesmo padrão e pelo PDF de 2025, chapa não conferida). Os outros pares Brilho × convencional diferem pouco e ficam como a pasta.
+- Total das 44 texturas: ~2,2 MB. Enquanto uma imagem carrega, a placa mostra o `hex` da cor. O `hex` não aparece escrito no site: sem os códigos oficiais de cor, ele dava a impressão de ser uma referência.
 
 ## Acessibilidade
 
@@ -147,7 +148,7 @@ Pontos em aberto antes de mandar para clientes:
 
 - [ ] **Aprovação** do comercial/marketing: o site usa a marca DayBrasil.
 - [ ] **Logo negativo.** O logo é o vetor original (extraído do PSD do modelo). Na navbar, sobre fundo escuro, o azul foi trocado por branco (versão negativa). Confirmar com o marketing se é a versão oficial para fundo escuro.
-- [ ] **Conferir as cores com a amostra física.** Na foto, o Azul Marinho Brilho é bem mais violeta que o Azul Marinho.
+- [ ] **Conferir as cores com a amostra física.** Azul Marinho Brilho: conferido e corrigido (25/10/2026). Vermelho Intenso Brilho: corrigido pelo mesmo padrão; falta conferir a chapa.
 - [ ] **Confirmar os acabamentos.** Brilho/Metálico/Acetinado/Cintilante/Fosco vieram do nome; "Textura" (Concreto, Aço Corten) foi classificação visual.
 - [ ] **Cores fora da pasta principal** (não estão no site até alguém confirmar que estão no portfólio atual): Cinza Claro, Cinza Escuro Leomare, Terra Cota Vulcano e Vermelho Rubi (têm foto no modelo, em `OUTRAS FOTOS`); Bronze Indiano, Imbuia, Espelhado, Cinza Escovado e Vinho Metálico (só fotos avulsas); Madeira Ébano Imperial, Cerejeira Clássica e Nogueira ("sob encomenda") e Azul Claro Brilho (só no kit de plaquinhas).
 - [ ] **Domínio** e imagem de prévia para links (`og:image`, com URL absoluta) para o WhatsApp mostrar uma miniatura.

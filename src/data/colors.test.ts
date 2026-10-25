@@ -40,6 +40,15 @@ describe('cartela de cores', () => {
     expect(color.texture.split('/').at(-1)).toBe(`${color.id}.webp`)
   })
 
+  // Pares que são a mesma tinta (só muda o acabamento) e cuja imagem da pasta oficial estava
+  // errada: o script corrige pela tabela TONE_FIXES. Conferidos na chapa física.
+  it.each([
+    ['azul-marinho-brilho', 'azul-marinho'],
+    ['vermelho-intenso-brilho', 'vermelho-intenso'],
+  ])('%s tem o mesmo tom de %s', (brilho, convencional) => {
+    expect(requireColor(brilho).hex).toBe(requireColor(convencional).hex)
+  })
+
   it('a combinação padrão da fachada usa cores que existem', () => {
     expect(findColor(DEFAULT_FACADE.main)).toBeDefined()
     expect(findColor(DEFAULT_FACADE.detail)).toBeDefined()
