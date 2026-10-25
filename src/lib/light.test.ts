@@ -1,5 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { bladeHighlight, finishLabel, finishSlug, FINISH_LIGHT, lightProfile } from './light'
+import { ACM_COLORS, requireColor } from '@/data/colors'
+import { deltaE2000, hexToRgb, rgbToLab } from './color'
+import {
+  bladeHighlight,
+  CARD_GLARE,
+  colorLight,
+  FACADE_GLINT,
+  FAN_SHEEN_ALPHA,
+  finishLabel,
+  finishSlug,
+  FINISH_LIGHT,
+  lighten,
+  lightProfile,
+} from './light'
 
 const brilho = FINISH_LIGHT.Brilho
 
@@ -26,6 +39,48 @@ describe('bladeHighlight', () => {
   it('posiciona o reflexo entre a ponta (0) e o pivô (1)', () => {
     const { position } = bladeHighlight(0, 0, -200, 400, brilho)
     expect(position).toBeCloseTo(0.5, 5)
+  })
+})
+
+describe('colorLight', () => {
+  /** Quanto a cor muda com branco de opacidade `alpha` por cima. */
+  const change = (hex: string, alpha: number) => {
+    const rgb = hexToRgb(hex)
+    return deltaE2000(rgbToLab(rgb), rgbToLab(lighten(rgb, alpha)))
+  }
+
+  it.each(ACM_COLORS)(
+    '$name: o reflexo nunca cobre a cor (cartela, detalhe, leque e fachada)',
+    (color) => {
+      const { cardSheen, cardGlare, fanGain, glint } = colorLight(color)
+      const limit = lightProfile(color).maxDeltaE + 0.01
+      expect(change(color.hex, 1 - (1 - cardSheen) * (1 - cardGlare))).toBeLessThanOrEqual(limit)
+      expect(change(color.hex, fanGain * FAN_SHEEN_ALPHA)).toBeLessThanOrEqual(limit)
+      expect(change(color.hex, glint)).toBeLessThanOrEqual(limit)
+    },
+  )
+
+  it('cores claras mantêm a luz que já tinham', () => {
+    expect(colorLight(requireColor('branco-neve')).cardSheen).toBeCloseTo(
+      lightProfile({}).cardGain,
+      5,
+    )
+    const brancoBrilho = colorLight(requireColor('branco-neve-brilho'))
+    expect(brancoBrilho.cardSheen).toBeCloseTo(FINISH_LIGHT.Brilho.cardGain, 5)
+    expect(brancoBrilho.cardGlare).toBeCloseTo(CARD_GLARE, 5)
+    expect(brancoBrilho.glint).toBeCloseTo(FINISH_LIGHT.Brilho.gain * FACADE_GLINT, 5)
+  })
+
+  it('placa escura recebe menos luz que a clara do mesmo acabamento', () => {
+    const escura = colorLight(requireColor('preto-carbono-brilho'))
+    const clara = colorLight(requireColor('branco-neve-brilho'))
+    expect(escura.cardSheen).toBeLessThan(clara.cardSheen)
+    expect(escura.fanGain).toBeLessThan(clara.fanGain)
+  })
+
+  it('só o acabamento brilho tem reflexo nítido', () => {
+    expect(colorLight(requireColor('preto-carbono')).cardGlare).toBe(0)
+    expect(colorLight(requireColor('preto-carbono-brilho')).cardGlare).toBeGreaterThan(0)
   })
 })
 
