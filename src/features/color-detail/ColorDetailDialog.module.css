@@ -63,18 +63,36 @@
 
 .info {
   max-width: 32rem;
+  /* Tamanho do nome da cor (também usado para reservar a altura do título) */
+  --name-size: clamp(2.2rem, 4.8vw, 4.4rem);
+}
+
+/*
+ * Família + nome numa caixa com a altura de 3 linhas do nome, alinhados por baixo.
+ * O nome mais longo ocupa 3 linhas em qualquer largura: assim, nomes de 1, 2 ou 3 linhas
+ * não empurram os textos e botões de baixo, que ficam no mesmo lugar ao trocar de cor.
+ */
+.heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(1.55em + 0.6rem + 3 * 0.92 * var(--name-size));
+  margin: 0 0 1.5rem;
 }
 
 .family {
   margin: 0 0 0.6rem;
+  line-height: 1.55;
   color: var(--ink-2);
   font-weight: 560;
 }
 
 .name {
-  margin: 0 0 1.5rem;
-  font-size: clamp(2.2rem, 4.8vw, 4.4rem);
+  margin: 0;
+  font-size: var(--name-size);
   line-height: 0.92;
+  /* Uma palavra mais larga que a tela quebra em vez de vazar para fora */
+  overflow-wrap: break-word;
   font-weight: 800;
   font-stretch: 125%;
   letter-spacing: -0.02em;
@@ -147,9 +165,59 @@
   background: var(--alu);
 }
 
+/*
+ * Celular: tudo cabe na altura visível (no iPhone, a barra do Safari ocupa uns 150px).
+ * Textos e botões têm altura fixa e ficam ancorados embaixo; a chapa ocupa o espaço que
+ * sobra em cima. Assim nada muda de lugar ao trocar de cor e os botões nunca somem.
+ * Em telas muito baixas (abaixo de ~140px para a chapa), o detalhe passa a rolar.
+ */
 @media (max-width: 640px) {
   .inner {
-    grid-template-columns: minmax(0, 1fr);
-    align-content: start;
+    display: flex;
+    flex-direction: column;
+    /* Estica os filhos na largura toda (no PC o grid centraliza; aqui a chapa sumiria) */
+    align-items: stretch;
+    gap: 1rem;
+    padding: 72px var(--gutter) max(16px, env(safe-area-inset-bottom));
+  }
+
+  .stage {
+    flex: 1 1 0;
+    min-height: 140px;
+    display: grid;
+    align-items: center;
+    /* A chapa calcula o tamanho pela altura que sobrou (unidades cqh) */
+    container-type: size;
+  }
+
+  /* 1.6 é a proporção da chapa: a mais larga que cabe na altura disponível */
+  .wrap {
+    width: min(100%, 100cqh * 1.6);
+    margin-inline: auto;
+  }
+
+  .info {
+    flex: none;
+    max-width: none;
+    /* Nome um pouco menor: o mais longo cabe em 2 linhas a partir de 360px de largura */
+    --name-size: clamp(1.75rem, 7.4vw, 2.2rem);
+  }
+
+  .heading {
+    min-height: calc(1.55em + 0.6rem + 2 * 0.92 * var(--name-size));
+    margin-bottom: 0.9rem;
+  }
+
+  .specs {
+    margin-bottom: 0.75rem;
+  }
+
+  .note {
+    margin-bottom: 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .pager {
+    margin-top: 1rem;
   }
 }

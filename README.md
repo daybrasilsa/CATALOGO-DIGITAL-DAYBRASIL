@@ -7,7 +7,7 @@ Catálogo interativo das cores de ACM (painel de alumínio composto) da DayBrasi
 ## O que o site faz
 
 - **Leque giratório (abertura):** as 44 cores formam um disco que o cliente gira arrastando (mouse ou dedo), com inércia; ao soltar, uma lâmina para no topo e mostra o nome. A luz segue o cursor e cada acabamento reflete de um jeito (brilho, metálico, cintilante, acetinado, fosco, textura).
-- **Cartela:** todas as placas sobre cinza neutro, com busca por nome (sem acento: "avela" acha "Avelã") e filtro por família. Clicar abre o detalhe da cor, com navegação entre cores.
+- **Cartela:** todas as placas sobre cinza neutro, com busca (sem acento: "avela" acha "Avelã"; procura no nome, no acabamento e na família: "cinza" traz também os grafites) e filtro por família. No celular, os filtros ficam numa linha que rola de lado. Clicar abre o detalhe da cor, com navegação entre cores.
 - **Rolagem suave** e títulos que "laminam" ao entrar na tela; as placas da cartela são "instaladas" conforme aparecem.
 - **Simulador de fachada:** o cliente escolhe a cor principal e a do pórtico/letreiro; as placas trocam uma a uma.
 - **Responsivo** do celular (360 px) ao monitor grande, e utilizável só com teclado.
@@ -132,7 +132,8 @@ Cada arquivo de teste fica ao lado do que ele testa (`*.test.ts` / `*.test.tsx`)
 ## Acessibilidade
 
 - Leque: um único ponto de parada no Tab; setas, Home e End giram o leque e movem o foco (padrão _toolbar_ do ARIA); Enter abre a cor. No celular, deslizar na vertical continua rolando a página.
-- Detalhe da cor: `<dialog>` nativo (foco preso, Esc fecha, foco volta para quem abriu); setas trocam de cor.
+- Detalhe da cor: `<dialog>` nativo (foco preso, Esc fecha, foco volta para quem abriu); setas trocam de cor. Abrir o detalhe cria uma entrada no histórico: o "voltar" do navegador ou do celular fecha o detalhe em vez de sair do site.
+- Menu fixo no alto: no topo da página fica transparente; na primeira rolada encolhe e ganha fundo escuro próprio.
 - Fachada: rádios nativos (setas trocam a cor); a simulação tem uma legenda para leitores de tela.
 - Foco sempre visível; texto sobre cada cor escolhe claro/escuro pela luminância.
 - "Reduzir movimento" desliga as animações sem perder nenhuma função.

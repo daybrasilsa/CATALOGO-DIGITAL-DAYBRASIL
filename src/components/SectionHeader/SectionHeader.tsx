@@ -15,8 +15,8 @@ interface SectionHeaderProps {
 }
 
 /**
- * Cabeçalho de seção. O título entra com o mesmo efeito de "laminação" do título
- * principal, quando a seção aparece na tela (uma vez só).
+ * Cabeçalho de seção. Quando a seção aparece na tela (uma vez só), as letras do título sobem
+ * uma a uma, como no título principal, mas sem "laminar" (mudar a largura da fonte): ver abaixo.
  */
 export function SectionHeader({
   id,
@@ -31,23 +31,19 @@ export function SectionHeader({
   useGSAP(
     () => {
       if (!motion) return
-      const words = gsap.utils.toArray<HTMLElement>('[data-anim="word"]')
       const chars = gsap.utils.toArray<HTMLElement>('[data-anim="char"]')
       const body = gsap.utils.toArray<HTMLElement>('[data-anim="header-body"]')
-      // Letras escondidas, mas ainda na largura final: a página é montada com a altura certa.
+      // Letras escondidas, mas já na largura final: a página é montada com a altura certa.
       gsap.set(chars, { yPercent: 105, opacity: 0 })
       gsap.set(body, { y: 18, opacity: 0 })
+      // Só posição e opacidade, que a placa de vídeo anima sem refazer a página. Animar a largura
+      // da fonte (como no título do topo) obriga o navegador a recalcular o layout a cada quadro;
+      // aqui a animação roda enquanto a pessoa rola, e isso travava a rolagem (medido na
+      // passagem da fachada para o rodapé). O título do topo anima uma vez, ao carregar, e fica.
       gsap
         .timeline({ scrollTrigger: { trigger: ref.current, start: 'top 82%', once: true } })
-        // Trava a largura final de cada palavra antes de estreitar as letras: assim a quebra de
-        // linha já fica onde vai terminar e o texto não pula de linha no meio da animação.
-        .set(words, { width: (_: number, el: HTMLElement) => el.getBoundingClientRect().width }, 0)
-        .set(chars, { '--w': 62 }, 0)
         .to(chars, { yPercent: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.025 }, 0)
-        .to(chars, { '--w': 125, duration: 1.2, ease: 'expo.inOut', stagger: 0.025 }, 0.05)
         .to(body, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, 0.35)
-        // No fim, solta as larguras: o título volta a se ajustar se a tela mudar de tamanho.
-        .set(words, { clearProps: 'width' })
     },
     { scope: ref, dependencies: [motion] },
   )

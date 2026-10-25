@@ -13,6 +13,20 @@ export const FAMILY_LABEL: Readonly<Record<FamilyId, string>> = {
   texturas: 'Texturas',
 }
 
+/**
+ * Palavra que, buscada, traz a família inteira: "cinza" também traz Dark Grey, os grafites
+ * e o prata. Famílias mistas ficam de fora de propósito: "laranja" não pode trazer os amarelos.
+ */
+export const FAMILY_SEARCH_TERM: Readonly<Partial<Record<FamilyId, string>>> = {
+  brancos: 'branco',
+  azuis: 'azul',
+  verdes: 'verde',
+  cinzas: 'cinza',
+  pretos: 'preto',
+  madeiras: 'madeira',
+  texturas: 'textura',
+}
+
 /** Ordem dos botões de filtro na cartela. */
 export const CATALOG_FILTERS: readonly { readonly id: CatalogFilter; readonly label: string }[] = [
   { id: 'todas', label: 'Todas' },
