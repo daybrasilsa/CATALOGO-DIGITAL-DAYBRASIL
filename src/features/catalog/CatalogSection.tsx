@@ -146,8 +146,8 @@ export function CatalogSection({
         className={styles.header}
       >
         <p>
-          Fundo cinza neutro, como numa cabine de luz, para comparar os tons sem interferência.
-          Clique em uma placa para ampliar.
+          Fundo cinza neutro, como numa cabine de luz, para comparar os tons sem interferência.{' '}
+          {finePointer ? 'Clique' : 'Toque'} em uma placa para ampliar.
         </p>
       </SectionHeader>
 
@@ -160,7 +160,7 @@ export function CatalogSection({
         </p>
       </div>
 
-      <FilterBar colors={colors} value={filter} onChange={handleFilter} />
+      <FilterBar colors={colors} value={filter} query={query} onChange={handleFilter} />
 
       <ul className={styles.grid} aria-label="Cores da cartela">
         {colors.map((color) => (

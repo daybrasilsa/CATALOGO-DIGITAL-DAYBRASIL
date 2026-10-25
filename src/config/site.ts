@@ -5,7 +5,7 @@ export const SITE = {
   company: 'DayBrasil',
   disclaimer: {
     lead: '*Cores meramente ilustrativas.',
-    body: 'Pode haver variação de tom, a depender de monitores e celulares. Solicite uma amostra física para o seu vendedor.',
+    body: 'Pode haver variação de tom, a depender de monitores e celulares. Solicite uma amostra física ao seu vendedor.',
   },
   colorNote:
     'Tom aproximado, tirado da foto da placa. Monitores e celulares mostram a cor de jeitos diferentes; para especificar a obra, use a amostra física.',

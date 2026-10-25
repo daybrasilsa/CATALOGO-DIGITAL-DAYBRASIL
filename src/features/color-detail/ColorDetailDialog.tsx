@@ -188,10 +188,12 @@ export function ColorDetailDialog({
           </div>
 
           <div ref={infoRef} className={styles.info}>
-            <p className={styles.family}>{FAMILY_LABEL[color.family]}</p>
-            <h3 id="detail-name" className={styles.name}>
-              {color.name}
-            </h3>
+            <div className={styles.heading}>
+              <p className={styles.family}>{FAMILY_LABEL[color.family]}</p>
+              <h3 id="detail-name" className={styles.name}>
+                {color.name}
+              </h3>
+            </div>
             <dl className={styles.specs}>
               {color.finish ? (
                 <div className={styles.row}>
