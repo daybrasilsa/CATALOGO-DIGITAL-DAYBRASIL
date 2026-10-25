@@ -84,6 +84,8 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.45rem 1.5rem;
+  /* Reserva uma linha mesmo sem acabamento: ao trocar de cor, o texto e os botões não pulam */
+  min-height: 1lh;
   margin: 0 0 1.25rem;
 }
 
@@ -99,11 +101,6 @@
 .specs dd {
   margin: 0;
   font-weight: 600;
-}
-
-.hex {
-  font-stretch: 80%;
-  font-variant-numeric: tabular-nums;
 }
 
 .note {
