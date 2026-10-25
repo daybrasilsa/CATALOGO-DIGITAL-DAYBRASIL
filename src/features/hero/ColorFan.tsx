@@ -10,7 +10,7 @@ import {
 import { FAMILY_LABEL } from '@/data/families'
 import { isLightSurface, textureStyle } from '@/lib/color'
 import { Draggable, gsap, useGSAP } from '@/lib/gsap'
-import { bladeHighlight, lightProfile } from '@/lib/light'
+import { bladeHighlight, colorLight, lightProfile } from '@/lib/light'
 import type { AcmColor, OpenOrigin } from '@/types/acm'
 import type { CSSVars } from '@/types/css'
 import {
@@ -74,6 +74,12 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
 
   const count = colors.length
   const baseAngles = useMemo(() => bladeBaseAngles(count, STEP), [count])
+  // Perfil de luz de cada lâmina, com o ganho limitado para o reflexo não cobrir a cor.
+  // Calculado uma vez aqui, não a cada quadro do giro.
+  const profiles = useMemo(
+    () => colors.map((c) => ({ ...lightProfile(c), gain: colorLight(c).fanGain })),
+    [colors],
+  )
   const startIndex = useMemo(
     () =>
       Math.max(
@@ -99,11 +105,11 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
     const { x, y } = light.current
     bladeRefs.current.forEach((blade, i) => {
       const sheen = sheenRefs.current[i]
-      const color = colors[i]
+      const profile = profiles[i]
       const base = baseAngles[i]
-      if (!blade || !sheen || !color || base === undefined) return
+      if (!blade || !sheen || !profile || base === undefined) return
       const world = base + rotation.current
-      const { intensity, position } = bladeHighlight(world, x, y, R, lightProfile(color))
+      const { intensity, position } = bladeHighlight(world, x, y, R, profile)
       // Variáveis no próprio reflexo: no botão, elas seriam herdadas e recalculariam a lâmina inteira.
       setVar(sheen, '--hl', intensity.toFixed(3))
       setVar(sheen, '--hy', position.toFixed(3))
@@ -118,7 +124,7 @@ export function ColorFan({ colors, motion, finePointer, onOpenColor }: ColorFanP
     }
     const top = indexAtTop(rotation.current, count, STEP)
     setActiveIndex((current) => (current === top ? current : top))
-  }, [colors, baseAngles, count])
+  }, [profiles, baseAngles, count])
 
   /** Gira o disco (graus). Estilo direto no elemento: fora do contexto do GSAP de propósito. */
   const applyRotation = useCallback(

@@ -118,7 +118,8 @@
     -14px 0 30px -8px rgb(0 0 0 / 0.7);
 }
 
-/* Reflexo: --hl (intensidade) e --hy (posição) vêm do cálculo de luz em JS */
+/* Reflexo: --hl (intensidade) e --hy (posição) vêm do cálculo de luz em JS.
+   O 0.95 abaixo é o FAN_SHEEN_ALPHA de src/lib/light.ts: mudou aqui, mude lá. */
 .sheen {
   position: absolute;
   inset: 0;

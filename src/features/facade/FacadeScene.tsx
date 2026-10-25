@@ -3,7 +3,7 @@ import { requireColor } from '@/data/colors'
 import { isLightSurface, textureStyle } from '@/lib/color'
 import { cx } from '@/lib/cx'
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
-import { lightProfile } from '@/lib/light'
+import { colorLight } from '@/lib/light'
 import type { FacadeZone, FacadeSelection } from '@/types/acm'
 import type { CSSVars } from '@/types/css'
 import { type FacadeCladding, initialCladding, syncCladding, visibleColor } from './cladding'
@@ -43,7 +43,7 @@ export function FacadeScene({ selection, motion, className }: FacadeSceneProps) 
   const playGlint = (colorId: string, delay = 0) => {
     const glint = glintRef.current
     if (!glint) return
-    glint.style.setProperty('--g', (lightProfile(requireColor(colorId)).gain * 0.55).toFixed(2))
+    glint.style.setProperty('--g', colorLight(requireColor(colorId)).glint.toFixed(2))
     gsap.fromTo(
       glint,
       { backgroundPosition: '120% 0' },
