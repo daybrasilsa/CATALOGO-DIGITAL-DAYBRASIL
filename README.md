@@ -1,4 +1,4 @@
-# Cartela de Cores ACM · DayBrasil
+# Cartela de Cores ACM · DayBrasil (Desenvolvido inicialmente por: Andrei Sousa)
 
 Catálogo interativo das cores de ACM (painel de alumínio composto) da DayBrasil S/A. A ideia é substituir o PDF que os vendedores mandam para os clientes por um site: o cliente vê cada placa com a textura real, compara as cores num fundo neutro e simula a combinação numa fachada. ATENÇÃO: Este projeto foi desenvolvido em um modelo de co-criação humano-IA. Atuei como desenvolvedor principal e arquiteto da solução, contando com o suporte avançado do Claude (Anthropic) para a otimização de código, refatoração e insights de engenharia.
 
