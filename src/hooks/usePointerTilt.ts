@@ -41,6 +41,7 @@ export function usePointerTilt(
       }
       surface.dataset.live = ''
     }
+    // Ao sair, solta as variáveis: o CSS (Swatch.module.css) leva placa e luz de volta devagar.
     const onLeave = () => {
       delete surface.dataset.live
       for (const prop of ['--mx', '--my', '--rx', '--ry']) surface.style.removeProperty(prop)

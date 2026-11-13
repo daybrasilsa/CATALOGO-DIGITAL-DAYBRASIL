@@ -1,4 +1,23 @@
+/*
+ * Registra a posição da luz como porcentagem: assim o navegador consegue animá-la.
+ * Sem isso, quando o mouse saía da placa, o brilho voltava ao canto de uma vez.
+ */
+@property --mx {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 22%;
+}
+
+@property --my {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 12%;
+}
+
 .swatch {
+  /* Volta ao repouso quando o mouse sai: começo suave e sem pressa (antes era 0,6 s e brusco) */
+  --settle: 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+
   position: relative;
   display: block;
   aspect-ratio: 1.6;
@@ -6,9 +25,12 @@
   background-size: cover;
   background-position: center;
   box-shadow: var(--plate-edge);
+  /* Inclinação, sombra e luz voltam juntas */
   transition:
-    transform 0.6s var(--ease-out),
-    box-shadow 0.6s var(--ease-out);
+    transform var(--settle),
+    box-shadow var(--settle),
+    --mx var(--settle),
+    --my var(--settle);
 }
 
 /* 3D só enquanto o mouse inclina a placa: parado, ele gasta uma camada de vídeo por placa */
