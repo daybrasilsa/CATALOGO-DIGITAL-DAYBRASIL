@@ -3,7 +3,7 @@
  * Gera a textura (WebP) de cada cor a partir da imagem no MODELO PADRÃO DayBrasil (2000 × 1386 px).
  *
  * Uso:
- *   npm run textura -- "C:/caminho/Azul Royal.png" "C:/caminho/Madeira Cedro.png"
+ *   npm run textura -- "C:/caminho/Azul Royal.png" "C:/caminho/Madeira Mogno.png"
  *
  * O que faz, para cada arquivo:
  *   1. Converte para sRGB usando o perfil de cor embutido (algumas fotos vêm em Adobe RGB;

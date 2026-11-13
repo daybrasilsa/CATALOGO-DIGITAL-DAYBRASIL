@@ -2,11 +2,11 @@
 
 Catálogo interativo das cores de ACM (painel de alumínio composto) da DayBrasil S/A. A ideia é substituir o PDF que os vendedores mandam para os clientes por um site: o cliente vê cada placa com a textura real, compara as cores num fundo neutro e simula a combinação numa fachada. ATENÇÃO: Este projeto foi desenvolvido em um modelo de co-criação humano-IA. Atuei como desenvolvedor principal e arquiteto da solução, contando com o suporte avançado do Claude (Anthropic) para a otimização de código, refatoração e insights de engenharia.
 
-> **Status:** em desenvolvimento (v0.2, 44 cores). Ainda não está aprovado para envio a clientes. Veja [Antes de publicar](#antes-de-publicar).
+> **Status:** em desenvolvimento (v0.2, 34 cores). Ainda não está aprovado para envio a clientes. Veja [Antes de publicar](#antes-de-publicar).
 
 ## O que o site faz
 
-- **Leque giratório (abertura):** as 44 cores formam um disco que o cliente gira arrastando (mouse ou dedo), com inércia; ao soltar, uma lâmina para no topo e mostra o nome. A luz segue o cursor e cada acabamento reflete de um jeito (brilho, metálico, cintilante, acetinado, fosco, textura).
+- **Leque giratório (abertura):** as 34 cores formam um disco que o cliente gira arrastando (mouse ou dedo), com inércia; ao soltar, uma lâmina para no topo e mostra o nome. A luz segue o cursor e cada acabamento reflete de um jeito (brilho, metálico, cintilante, acetinado, fosco, textura).
 - **Cartela:** todas as placas sobre cinza neutro, com busca (sem acento: "avela" acha "Avelã"; procura no nome, no acabamento e na família: "cinza" traz também os grafites) e filtro por família. No celular, os filtros ficam numa linha que rola de lado. Clicar abre o detalhe da cor, com navegação entre cores.
 - **Rolagem suave** e títulos que "laminam" ao entrar na tela; as placas da cartela são "instaladas" conforme aparecem.
 - **Simulador de fachada:** o cliente escolhe a cor principal e a do pórtico/letreiro; as placas trocam uma a uma.
@@ -122,12 +122,13 @@ Cada arquivo de teste fica ao lado do que ele testa (`*.test.ts` / `*.test.tsx`)
 
 ### Fidelidade de cor
 
-- **Perfil de cor:** 8 das 44 fotos originais vêm em **Adobe RGB** (as outras em sRGB). O navegador trabalha em sRGB; sem converter, cores como o Verde Folha e o Vermelho Intenso Brilho saem bem diferentes. O script converte pelo perfil de cada arquivo.
+- **Lista de cores:** só as 34 do catálogo TECBOND (PDF de 2025, linhas Poliéster e PVDF). As 10 que estavam na pasta oficial e fora do catálogo saíram do site em 13/11/2026: Prata Metálico, Cinza Acetinado Geely, Cinza RAL 7037, Cinza Steel, Dark Grey, Verde Fosco Localiza, Bronze 1003, Madeira Carvalho Dourado, Madeira Cedro e Madeira Vintage.
+- **Perfil de cor:** 8 das 34 fotos originais vêm em **Adobe RGB** (as outras em sRGB). O navegador trabalha em sRGB; sem converter, cores como o Verde Folha e o Vermelho Intenso Brilho saem bem diferentes. O script converte pelo perfil de cada arquivo.
 - **Compressão:** placas lisas são salvas **sem perda** (pixels idênticos à foto, poucos KB). Texturas (madeiras, metálicos, concreto) usam WebP qualidade 90: sem perda ficariam com 300 a 800 KB cada.
 - **Conferência feita na v0.2:** cada textura comparada pixel a pixel com a foto original. 21 das 44 são idênticas; a maior diferença na cor média é ΔE 0,42 (abaixo de 1, o olho não percebe). Nenhuma textura trocada de nome: cada uma bate com a própria foto com folga grande sobre a segunda mais parecida (madeiras incluídas).
 - **Correção de tom:** quando a imagem da pasta oficial não bate com a chapa física, o id da cor entra na tabela `TONE_FIXES` do script com o tom certo. O script desloca a cor de todos os pixels (em Lab) até a média virar esse tom, sem mexer no desenho (reflexo, veio, granulado). Só entra o que foi conferido na chapa física. Hoje, as duas com o tom da versão convencional (decisão de 25/10/2026): Azul Marinho Brilho (a imagem da pasta é roxa; chapa conferida) e Vermelho Intenso Brilho (a imagem é saturada demais; aprovado pelo mesmo padrão e pelo PDF de 2025, chapa não conferida). Os outros pares Brilho × convencional diferem pouco e ficam como a pasta.
 - **Reflexo sem cobrir a cor:** o brilho que segue o cursor é branco por cima da placa, e a mesma intensidade muda muito mais uma cor escura que uma clara. `colorLight()` (`src/lib/light.ts`) limita, cor a cor, quanto o reflexo pode mudar a cor no ponto mais forte (`maxDeltaE` do acabamento: Brilho 12, Metálico e Cintilante 10, demais 8, em ΔE2000). Vale na cartela, no detalhe, no leque e na fachada; há um teste por cor.
-- Total das 44 texturas: ~2,2 MB. Enquanto uma imagem carrega, a placa mostra o `hex` da cor. O `hex` não aparece escrito no site: sem os códigos oficiais de cor, ele dava a impressão de ser uma referência.
+- Total das 34 texturas: ~1,6 MB. Enquanto uma imagem carrega, a placa mostra o `hex` da cor. O `hex` não aparece escrito no site: sem os códigos oficiais de cor, ele dava a impressão de ser uma referência.
 
 ## Acessibilidade
 

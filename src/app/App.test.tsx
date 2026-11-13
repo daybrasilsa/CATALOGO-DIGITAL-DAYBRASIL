@@ -15,7 +15,7 @@ describe('App', () => {
   it('mostra o título, a cartela completa e os seletores da fachada', () => {
     render(<App />)
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Cartela de cores ACM' }),
+      screen.getByRole('heading', { level: 1, name: 'Catálogo de cores ACM' }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: `As ${ACM_COLORS.length} cores` }),
@@ -117,12 +117,12 @@ describe('App', () => {
     render(<App />)
     const undo = screen.getByRole('button', { name: 'Desfazer sorteio' })
     expect(undo).toBeDisabled()
-    expect(screen.getByText(/revestimento Dark Grey e pórtico Amarelo Real/)).toBeInTheDocument()
+    expect(screen.getByText(/revestimento Cinza Grey e pórtico Amarelo Real/)).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Sortear combinação' }))
     expect(undo).toBeEnabled()
     await user.click(undo)
-    expect(screen.getByText(/revestimento Dark Grey e pórtico Amarelo Real/)).toBeInTheDocument()
+    expect(screen.getByText(/revestimento Cinza Grey e pórtico Amarelo Real/)).toBeInTheDocument()
     expect(undo).toBeDisabled()
   })
 
