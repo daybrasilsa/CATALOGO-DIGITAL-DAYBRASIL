@@ -49,6 +49,9 @@ const TONE_FIXES = {
   // demais (mesmo padrão da Azul Marinho Brilho; o PDF de 2025 também mostra o mesmo tom).
   // Aprovado pelo Andrei em 25/10/2026, sem conferir a chapa. Tom = hex do Vermelho Intenso.
   'vermelho-intenso-brilho': '#BA211B',
+  // Conferido na chapa física pelo Andrei em 13/11/2026 (foto ao lado do site): a chapa é mais
+  // intensa e puxa menos para o azul. Tom medido na foto; claridade mantida como a da pasta.
+  'verde-br': '#1A743D',
 }
 
 /** "Madeira Avelã" → "madeira-avela" */

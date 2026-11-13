@@ -162,7 +162,15 @@ export const ACM_COLORS: readonly AcmColor[] = [
     hex: '#00757D',
     texture: verdeFinlandia,
   },
-  { id: 'verde-br', name: 'Verde BR', family: 'verdes', hex: '#237348', texture: verdeBr },
+  {
+    id: 'verde-br',
+    name: 'Verde BR',
+    family: 'verdes',
+    // Brilho conferido no catálogo físico (13/11/2026); o nome comercial não traz "Brilho"
+    finish: 'Brilho',
+    hex: '#1A743D',
+    texture: verdeBr,
+  },
   {
     id: 'verde-escuro',
     name: 'Verde Escuro',

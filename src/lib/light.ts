@@ -160,8 +160,8 @@ export function finishSlug(finish: Finish | undefined): string {
   }
 }
 
-/** O acabamento só vira etiqueta quando o nome da cor ainda não o diz ("Azul Marinho Brilho" não precisa de "Brilho"). */
+/** O acabamento vira etiqueta só quando o nome não o diz. Brilho nunca vira: o reflexo já mostra. */
 export function finishLabel(color: Pick<AcmColor, 'name' | 'finish'>): string | null {
-  if (!color.finish) return null
+  if (!color.finish || color.finish === 'Brilho') return null
   return color.name.includes(color.finish) ? null : color.finish
 }

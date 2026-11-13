@@ -39,6 +39,8 @@ describe('busca', () => {
 
   it('procura também no acabamento e na família', () => {
     expect(visibleIds(ACM_COLORS, 'todas', 'textura')).toEqual(['concreto', 'aco-corten'])
+    // Verde BR é brilho sem ter "Brilho" no nome: a busca acha pelo acabamento
+    expect(visibleIds(ACM_COLORS, 'todas', 'brilho')).toContain('verde-br')
     // "cinza" traz a família inteira, inclusive os grafites
     expect(visibleIds(ACM_COLORS, 'todas', 'cinza')).toEqual(visibleIds(ACM_COLORS, 'cinzas'))
     expect(visibleIds(ACM_COLORS, 'todas', 'cinza')).toContain('grafite-chumbo')
