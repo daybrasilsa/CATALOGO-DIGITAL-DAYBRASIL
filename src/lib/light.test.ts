@@ -96,5 +96,6 @@ describe('finishLabel', () => {
     expect(finishLabel({ name: 'Azul Marinho Brilho', finish: 'Brilho' })).toBeNull()
     expect(finishLabel({ name: 'Concreto', finish: 'Textura' })).toBe('Textura')
     expect(finishLabel({ name: 'Azul Royal' })).toBeNull()
+    expect(finishLabel({ name: 'Verde BR', finish: 'Brilho' })).toBeNull()
   })
 })

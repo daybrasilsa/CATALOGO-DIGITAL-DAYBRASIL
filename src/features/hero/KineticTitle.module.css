@@ -1,5 +1,6 @@
 /* Sem font-size aqui: o tamanho vem do className de quem usa. */
 .title {
+  display: flow-root;
   margin: 0;
   line-height: 0.9;
   font-weight: 800;
@@ -11,7 +12,8 @@
 .line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.04em;
+  padding-bottom: 0.22em;
+  margin-bottom: -0.12em;
 }
 
 .word {

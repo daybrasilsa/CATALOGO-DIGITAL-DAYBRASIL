@@ -74,7 +74,7 @@
 
 /*
  * Quando as placas entram na tela, a luz já acendeu: o texto delas fica escuro direto.
- * Assim, a animação da luz recalcula só o topo da cartela, não as 44 placas.
+ * Assim, a animação da luz recalcula só o topo da cartela, não todas as placas.
  */
 :global(.is-scrub) .grid {
   --fg: var(--ink);

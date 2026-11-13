@@ -34,9 +34,9 @@ describe('cartela de cores', () => {
   })
 
   it.each(ACM_COLORS)('$name usa a própria textura (arquivo <id>.webp)', (color) => {
-    // Pega import trocado (ex.: a Madeira Cedro apontando para a textura da Mogno).
+    // Pega import trocado (ex.: a Madeira Avelã apontando para a textura da Mogno).
     // Nos testes o Vite não põe hash no nome: o arquivo tem que ser exatamente <id>.webp.
-    // (Comparação exata: "madeira-carvalho" não pode passar apontando para "madeira-carvalho-dourado".)
+    // (Comparação exata: "azul-marinho" não pode passar apontando para "azul-marinho-brilho".)
     expect(color.texture.split('/').at(-1)).toBe(`${color.id}.webp`)
   })
 

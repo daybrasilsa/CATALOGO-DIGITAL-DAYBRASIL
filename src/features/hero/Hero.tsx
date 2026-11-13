@@ -28,7 +28,7 @@ export function Hero({ colors, onOpenColor }: HeroProps) {
       const side = gsap.utils.toArray<HTMLElement>('[data-anim="hero-side"]')
 
       // Entrada do título: letras sobem estreitas e "laminam" até a largura máxima.
-      gsap.set(chars, { '--w': 62, yPercent: 105 })
+      gsap.set(chars, { '--w': 62, yPercent: 125 })
       gsap.set(side, { y: 22, opacity: 0 })
       gsap
         .timeline({ delay: INTRO.delay })
@@ -63,7 +63,7 @@ export function Hero({ colors, onOpenColor }: HeroProps) {
       <div className={styles.copy} data-anim="hero-copy">
         <KineticTitle
           id="hero-title"
-          lines={['Cartela de', 'cores ACM']}
+          lines={['Catálogo de', 'cores ACM']}
           className={styles.title}
         />
         <div className={styles.side}>

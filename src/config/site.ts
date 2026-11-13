@@ -20,4 +20,4 @@ export const SECTION_IDS = {
 } as const
 
 /** Combinação que a fachada mostra ao abrir a página. */
-export const DEFAULT_FACADE: FacadeSelection = { main: 'dark-grey', detail: 'amarelo-real' }
+export const DEFAULT_FACADE: FacadeSelection = { main: 'cinza-grey', detail: 'amarelo-real' }

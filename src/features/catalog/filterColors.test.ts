@@ -11,7 +11,7 @@ describe('filtro da cartela', () => {
 
   it('filtra por família', () => {
     const ids = visibleIds(ACM_COLORS, 'madeiras')
-    expect(ids).toHaveLength(7)
+    expect(ids).toHaveLength(4)
     for (const id of ids) expect(id.startsWith('madeira-')).toBe(true)
   })
 
@@ -31,7 +31,6 @@ describe('busca', () => {
 
   it('combina busca e família', () => {
     expect(visibleIds(ACM_COLORS, 'cinzas', 'metálico')).toEqual([
-      'prata-metalico',
       'cinza-metalico',
       'grafite-metalico',
     ])
@@ -40,9 +39,11 @@ describe('busca', () => {
 
   it('procura também no acabamento e na família', () => {
     expect(visibleIds(ACM_COLORS, 'todas', 'textura')).toEqual(['concreto', 'aco-corten'])
-    // "cinza" traz a família inteira, inclusive Dark Grey e os grafites
+    // Verde BR é brilho sem ter "Brilho" no nome: a busca acha pelo acabamento
+    expect(visibleIds(ACM_COLORS, 'todas', 'brilho')).toContain('verde-br')
+    // "cinza" traz a família inteira, inclusive os grafites
     expect(visibleIds(ACM_COLORS, 'todas', 'cinza')).toEqual(visibleIds(ACM_COLORS, 'cinzas'))
-    expect(visibleIds(ACM_COLORS, 'todas', 'cinza')).toContain('dark-grey')
+    expect(visibleIds(ACM_COLORS, 'todas', 'cinza')).toContain('grafite-chumbo')
   })
 
   it('não mistura famílias mistas: "laranja" não traz os amarelos', () => {

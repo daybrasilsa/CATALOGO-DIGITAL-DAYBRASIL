@@ -9,37 +9,27 @@ import azulNoturno from '@/assets/textures/azul-noturno.webp'
 import azulRoyal from '@/assets/textures/azul-royal.webp'
 import brancoNeve from '@/assets/textures/branco-neve.webp'
 import brancoNeveBrilho from '@/assets/textures/branco-neve-brilho.webp'
-import bronze1003 from '@/assets/textures/bronze-1003.webp'
 import champagneMetalico from '@/assets/textures/champagne-metalico.webp'
 import cinzaAcetinado from '@/assets/textures/cinza-acetinado.webp'
-import cinzaAcetinadoGeely from '@/assets/textures/cinza-acetinado-geely.webp'
 import cinzaEscuro from '@/assets/textures/cinza-escuro.webp'
 import cinzaGrey from '@/assets/textures/cinza-grey.webp'
 import cinzaMetalico from '@/assets/textures/cinza-metalico.webp'
-import cinzaRal7037 from '@/assets/textures/cinza-ral-7037.webp'
-import cinzaSteel from '@/assets/textures/cinza-steel.webp'
 import concreto from '@/assets/textures/concreto.webp'
-import darkGrey from '@/assets/textures/dark-grey.webp'
 import grafiteChumbo from '@/assets/textures/grafite-chumbo.webp'
 import grafiteMetalico from '@/assets/textures/grafite-metalico.webp'
 import laranjaSilvestre from '@/assets/textures/laranja-silvestre.webp'
 import laranjaSilvestreBrilho from '@/assets/textures/laranja-silvestre-brilho.webp'
 import madeiraAvela from '@/assets/textures/madeira-avela.webp'
 import madeiraCarvalho from '@/assets/textures/madeira-carvalho.webp'
-import madeiraCarvalhoDourado from '@/assets/textures/madeira-carvalho-dourado.webp'
-import madeiraCedro from '@/assets/textures/madeira-cedro.webp'
 import madeiraMogno from '@/assets/textures/madeira-mogno.webp'
 import madeiraSucupira from '@/assets/textures/madeira-sucupira.webp'
-import madeiraVintage from '@/assets/textures/madeira-vintage.webp'
 import marrom from '@/assets/textures/marrom.webp'
-import prataMetalico from '@/assets/textures/prata-metalico.webp'
 import pretoCarbono from '@/assets/textures/preto-carbono.webp'
 import pretoCarbonoBrilho from '@/assets/textures/preto-carbono-brilho.webp'
 import verdeBr from '@/assets/textures/verde-br.webp'
 import verdeEscuro from '@/assets/textures/verde-escuro.webp'
 import verdeFinlandia from '@/assets/textures/verde-finlandia.webp'
 import verdeFolha from '@/assets/textures/verde-folha.webp'
-import verdeFoscoLocaliza from '@/assets/textures/verde-fosco-localiza.webp'
 import vermelhoIntenso from '@/assets/textures/vermelho-intenso.webp'
 import vermelhoIntensoBrilho from '@/assets/textures/vermelho-intenso-brilho.webp'
 import vermelhoKarmin from '@/assets/textures/vermelho-karmin.webp'
@@ -172,14 +162,14 @@ export const ACM_COLORS: readonly AcmColor[] = [
     hex: '#00757D',
     texture: verdeFinlandia,
   },
-  { id: 'verde-br', name: 'Verde BR', family: 'verdes', hex: '#237348', texture: verdeBr },
   {
-    id: 'verde-fosco-localiza',
-    name: 'Verde Fosco Localiza',
+    id: 'verde-br',
+    name: 'Verde BR',
     family: 'verdes',
-    finish: 'Fosco',
-    hex: '#006A29',
-    texture: verdeFoscoLocaliza,
+    // Brilho conferido no catálogo físico (13/11/2026); o nome comercial não traz "Brilho"
+    finish: 'Brilho',
+    hex: '#1A743D',
+    texture: verdeBr,
   },
   {
     id: 'verde-escuro',
@@ -190,14 +180,6 @@ export const ACM_COLORS: readonly AcmColor[] = [
   },
 
   // Cinzas e grafites
-  {
-    id: 'prata-metalico',
-    name: 'Prata Metálico',
-    family: 'cinzas',
-    finish: 'Metálico',
-    hex: '#DBD6CF',
-    texture: prataMetalico,
-  },
   {
     id: 'cinza-metalico',
     name: 'Cinza Metálico',
@@ -214,22 +196,6 @@ export const ACM_COLORS: readonly AcmColor[] = [
     hex: '#BDBEC2',
     texture: cinzaAcetinado,
   },
-  {
-    id: 'cinza-acetinado-geely',
-    name: 'Cinza Acetinado Geely',
-    family: 'cinzas',
-    finish: 'Acetinado',
-    hex: '#BEBCB9',
-    texture: cinzaAcetinadoGeely,
-  },
-  {
-    id: 'cinza-ral-7037',
-    name: 'Cinza RAL 7037',
-    family: 'cinzas',
-    hex: '#807C75',
-    texture: cinzaRal7037,
-  },
-  { id: 'cinza-steel', name: 'Cinza Steel', family: 'cinzas', hex: '#686A65', texture: cinzaSteel },
   {
     id: 'grafite-chumbo',
     name: 'Grafite Chumbo',
@@ -253,7 +219,6 @@ export const ACM_COLORS: readonly AcmColor[] = [
     hex: '#2D4548',
     texture: cinzaEscuro,
   },
-  { id: 'dark-grey', name: 'Dark Grey', family: 'cinzas', hex: '#393C36', texture: darkGrey },
 
   // Pretos
   {
@@ -272,7 +237,7 @@ export const ACM_COLORS: readonly AcmColor[] = [
     texture: pretoCarbono,
   },
 
-  // Bronze, champagne e marrom
+  // Champagne e marrom
   {
     id: 'champagne-metalico',
     name: 'Champagne Metálico',
@@ -280,13 +245,6 @@ export const ACM_COLORS: readonly AcmColor[] = [
     finish: 'Metálico',
     hex: '#B1A392',
     texture: champagneMetalico,
-  },
-  {
-    id: 'bronze-1003',
-    name: 'Bronze 1003',
-    family: 'marrons',
-    hex: '#4B3C24',
-    texture: bronze1003,
   },
   { id: 'marrom', name: 'Marrom', family: 'marrons', hex: '#4A1D00', texture: marrom },
 
@@ -304,27 +262,6 @@ export const ACM_COLORS: readonly AcmColor[] = [
     family: 'madeiras',
     hex: '#7D4B11',
     texture: madeiraMogno,
-  },
-  {
-    id: 'madeira-carvalho-dourado',
-    name: 'Madeira Carvalho Dourado',
-    family: 'madeiras',
-    hex: '#8B4A15',
-    texture: madeiraCarvalhoDourado,
-  },
-  {
-    id: 'madeira-cedro',
-    name: 'Madeira Cedro',
-    family: 'madeiras',
-    hex: '#7D3108',
-    texture: madeiraCedro,
-  },
-  {
-    id: 'madeira-vintage',
-    name: 'Madeira Vintage',
-    family: 'madeiras',
-    hex: '#673310',
-    texture: madeiraVintage,
   },
   {
     id: 'madeira-avela',
