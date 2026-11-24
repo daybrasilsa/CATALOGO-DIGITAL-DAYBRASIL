@@ -29,7 +29,7 @@ describe('cladding (faces das placas)', () => {
 describe('pickRandomCombo', () => {
   it('sorteia famílias diferentes, com contraste e diferente da atual', () => {
     const random = createSeededRandom(3)
-    const current = { main: 'dark-grey', detail: 'amarelo-real' }
+    const current = { main: 'cinza-grey', detail: 'amarelo-real' }
     for (let i = 0; i < 50; i++) {
       const combo = pickRandomCombo(ACM_COLORS, current, random)
       expect(combo.main).not.toBe(combo.detail)

@@ -41,6 +41,8 @@
 
   /* Layout */
   --gutter: clamp(16px, 4vw, 56px);
+  /* Altura do menu fixo depois da primeira rolada (ver SiteNav.module.css) */
+  --nav-compact-h: 52px;
 
   /* Movimento */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);

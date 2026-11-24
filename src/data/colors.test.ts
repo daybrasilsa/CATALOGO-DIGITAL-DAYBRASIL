@@ -34,10 +34,19 @@ describe('cartela de cores', () => {
   })
 
   it.each(ACM_COLORS)('$name usa a própria textura (arquivo <id>.webp)', (color) => {
-    // Pega import trocado (ex.: a Madeira Cedro apontando para a textura da Mogno).
+    // Pega import trocado (ex.: a Madeira Avelã apontando para a textura da Mogno).
     // Nos testes o Vite não põe hash no nome: o arquivo tem que ser exatamente <id>.webp.
-    // (Comparação exata: "madeira-carvalho" não pode passar apontando para "madeira-carvalho-dourado".)
+    // (Comparação exata: "azul-marinho" não pode passar apontando para "azul-marinho-brilho".)
     expect(color.texture.split('/').at(-1)).toBe(`${color.id}.webp`)
+  })
+
+  // Pares que são a mesma tinta (só muda o acabamento) e cuja imagem da pasta oficial estava
+  // errada: o script corrige pela tabela TONE_FIXES. Conferidos na chapa física.
+  it.each([
+    ['azul-marinho-brilho', 'azul-marinho'],
+    ['vermelho-intenso-brilho', 'vermelho-intenso'],
+  ])('%s tem o mesmo tom de %s', (brilho, convencional) => {
+    expect(requireColor(brilho).hex).toBe(requireColor(convencional).hex)
   })
 
   it('a combinação padrão da fachada usa cores que existem', () => {

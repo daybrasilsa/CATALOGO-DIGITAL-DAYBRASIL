@@ -1,24 +1,47 @@
+/*
+ * Registra a posição da luz como porcentagem: assim o navegador consegue animá-la.
+ * Sem isso, quando o mouse saía da placa, o brilho voltava ao canto de uma vez.
+ */
+@property --mx {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 22%;
+}
+
+@property --my {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 12%;
+}
+
 .swatch {
+  /* Volta ao repouso quando o mouse sai: começo suave e sem pressa (antes era 0,6 s e brusco) */
+  --settle: 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+
   position: relative;
   display: block;
   aspect-ratio: 1.6;
   border-radius: 10px;
   background-size: cover;
   background-position: center;
-  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   box-shadow: var(--plate-edge);
+  /* Inclinação, sombra e luz voltam juntas */
   transition:
-    transform 0.6s var(--ease-out),
-    box-shadow 0.6s var(--ease-out);
+    transform var(--settle),
+    box-shadow var(--settle),
+    --mx var(--settle),
+    --my var(--settle);
 }
 
+/* 3D só enquanto o mouse inclina a placa: parado, ele gasta uma camada de vídeo por placa */
 .swatch[data-live] {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition:
     transform 0.12s linear,
     box-shadow 0.3s;
 }
 
-/* Brilho difuso que acompanha o cursor */
+/* Brilho difuso que acompanha o cursor (--sheen-gain vem de colorLight, limitado por cor) */
 .sheen {
   position: absolute;
   inset: 0;
@@ -38,7 +61,7 @@
   opacity: 1;
 }
 
-/* Reflexo nítido: só nos acabamentos brilho */
+/* Reflexo nítido: só nos acabamentos brilho (--glare-gain vem de colorLight, limitado por cor) */
 .glare {
   position: absolute;
   inset: 0;
@@ -48,7 +71,7 @@
   background: linear-gradient(
     115deg,
     rgb(255 255 255 / 0) 40%,
-    rgb(255 255 255 / 0.38) 47%,
+    rgb(255 255 255 / var(--glare-gain, 0)) 47%,
     rgb(255 255 255 / 0) 54%
   );
   background-size: 260% 100%;

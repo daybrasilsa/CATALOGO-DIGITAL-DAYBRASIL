@@ -34,10 +34,11 @@ export function CatalogCard({ color, hidden, finePointer, motion, onOpen, ref }:
         <Swatch ref={swatchRef} color={color} className={styles.swatch} />
         <span className={styles.meta}>
           <span className={styles.name}>{color.name}</span>
-          <span className={styles.sub}>
-            {finish ? <span className={styles.tag}>{finish}</span> : null}
-            <span className={styles.hex}>≈ {color.hex}</span>
-          </span>
+          {finish ? (
+            <span className={styles.sub}>
+              <span className={styles.tag}>{finish}</span>
+            </span>
+          ) : null}
         </span>
       </button>
     </li>

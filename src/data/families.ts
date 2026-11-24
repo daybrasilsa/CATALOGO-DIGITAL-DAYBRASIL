@@ -8,9 +8,23 @@ export const FAMILY_LABEL: Readonly<Record<FamilyId, string>> = {
   verdes: 'Verdes',
   cinzas: 'Cinzas e grafites',
   pretos: 'Pretos',
-  marrons: 'Bronze, champagne e marrom',
+  marrons: 'Champagne e marrom',
   madeiras: 'Madeiras',
   texturas: 'Texturas',
+}
+
+/**
+ * Palavra que, buscada, traz a família inteira: "cinza" também traz os grafites.
+ * Famílias mistas ficam de fora de propósito: "laranja" não pode trazer os amarelos.
+ */
+export const FAMILY_SEARCH_TERM: Readonly<Partial<Record<FamilyId, string>>> = {
+  brancos: 'branco',
+  azuis: 'azul',
+  verdes: 'verde',
+  cinzas: 'cinza',
+  pretos: 'preto',
+  madeiras: 'madeira',
+  texturas: 'textura',
 }
 
 /** Ordem dos botões de filtro na cartela. */

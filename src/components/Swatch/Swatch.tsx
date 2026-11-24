@@ -1,7 +1,7 @@
 import type { ReactNode, Ref } from 'react'
 import { textureStyle } from '@/lib/color'
 import { cx } from '@/lib/cx'
-import { finishSlug, lightProfile } from '@/lib/light'
+import { colorLight, finishSlug } from '@/lib/light'
 import type { AcmColor } from '@/types/acm'
 import type { CSSVars } from '@/types/css'
 import styles from './Swatch.module.css'
@@ -20,7 +20,12 @@ interface SwatchProps {
  * Para o brilho seguir o cursor, combine com usePointerTilt.
  */
 export function Swatch({ color, className, ref, children }: SwatchProps) {
-  const style: CSSVars = { ...textureStyle(color), '--sheen-gain': lightProfile(color).cardGain }
+  const light = colorLight(color)
+  const style: CSSVars = {
+    ...textureStyle(color),
+    '--sheen-gain': light.cardSheen.toFixed(3),
+    '--glare-gain': light.cardGlare.toFixed(3),
+  }
   return (
     <span
       ref={ref}

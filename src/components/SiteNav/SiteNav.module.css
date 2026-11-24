@@ -1,0 +1,111 @@
+/* Marcador no alto da página: os primeiros 40px de rolagem já deixam o menu compacto */
+.sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 40px;
+  pointer-events: none;
+}
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  /* Compacto, mede exatamente --nav-compact-h (no topo o logo maior deixa o menu mais alto) */
+  min-height: var(--nav-compact-h);
+  padding: 18px var(--gutter);
+  /* Atrás do menu há sempre fundo escuro: o palco (no topo) ou a barra compacta */
+  --fg: var(--light);
+  color: var(--light);
+  transition: padding 0.35s var(--ease-out);
+}
+
+/* Fundo da barra compacta numa camada própria: na troca, só a opacidade anima */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* Opaco: com transparência, o título do topo aparecia por trás do logo */
+  background: var(--stage);
+  box-shadow: 0 10px 24px -18px rgb(0 0 0 / 0.7);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+/*
+ * Compacto: 8px + logo de 54px de largura (35px de altura) + 8px = 51px, arredondado para
+ * 52px pelo min-height. Essa altura é o --nav-compact-h (tokens.css), usado por quem fica
+ * preso no alto da tela (a fachada no celular).
+ */
+.nav[data-compact] {
+  padding-block: 8px;
+}
+
+.nav[data-compact]::before {
+  opacity: 1;
+}
+
+.home {
+  display: inline-block;
+  padding: 4px;
+  margin: -4px;
+  border-radius: 6px;
+}
+
+/* Logo solto sobre o palco (versão negativa, sem plaquinha branca) */
+.logo {
+  width: clamp(76px, 7vw, 104px);
+  filter: drop-shadow(0 6px 18px rgb(0 0 0 / 0.35));
+  transition: width 0.35s var(--ease-out);
+}
+
+.nav[data-compact] .logo {
+  width: 54px;
+}
+
+.links {
+  display: flex;
+  gap: clamp(0.9rem, 2.4vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  font-weight: 560;
+  font-size: 0.9688rem;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+@media (max-width: 640px) {
+  .links {
+    gap: 0.9rem;
+  }
+
+  .links a {
+    font-size: 0.875rem;
+  }
+
+  .logo {
+    width: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .nav::before,
+  .logo {
+    transition: none;
+  }
+}

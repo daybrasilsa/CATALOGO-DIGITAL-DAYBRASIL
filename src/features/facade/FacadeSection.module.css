@@ -2,6 +2,9 @@
   position: relative;
   overflow: clip;
   padding: clamp(88px, 11vw, 160px) var(--gutter) 0;
+  /* Superfície clara: texto e foco dos botões em tinta escura, sem depender do --fg da página */
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
   color: var(--ink);
   background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-low) 100%);
 }
@@ -20,6 +23,29 @@
 
 .pickers {
   padding-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.undo {
+  padding: 0.5rem 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+}
+
+/* Sem sorteio para desfazer: some, mas guarda o espaço */
+.undo:disabled {
+  visibility: hidden;
 }
 
 /* Calçada */
@@ -46,7 +72,8 @@
 
   .scene {
     position: sticky;
-    top: 0;
+    /* Logo abaixo do menu fixo, que também fica preso no alto da tela */
+    top: var(--nav-compact-h);
     z-index: 3;
     order: 2;
     margin: 0 calc(var(--gutter) * -1);

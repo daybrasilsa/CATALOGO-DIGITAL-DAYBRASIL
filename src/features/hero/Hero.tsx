@@ -6,7 +6,6 @@ import { gsap, useGSAP } from '@/lib/gsap'
 import type { AcmColor, OpenOrigin } from '@/types/acm'
 import { ColorFan } from './ColorFan'
 import { fanOrder } from './fanOrder'
-import { HeroNav } from './HeroNav'
 import { INTRO } from './intro'
 import { KineticTitle } from './KineticTitle'
 import styles from './Hero.module.css'
@@ -29,7 +28,7 @@ export function Hero({ colors, onOpenColor }: HeroProps) {
       const side = gsap.utils.toArray<HTMLElement>('[data-anim="hero-side"]')
 
       // Entrada do título: letras sobem estreitas e "laminam" até a largura máxima.
-      gsap.set(chars, { '--w': 62, yPercent: 105 })
+      gsap.set(chars, { '--w': 62, yPercent: 125 })
       gsap.set(side, { y: 22, opacity: 0 })
       gsap
         .timeline({ delay: INTRO.delay })
@@ -61,18 +60,17 @@ export function Hero({ colors, onOpenColor }: HeroProps) {
 
   return (
     <section ref={ref} id={SECTION_IDS.top} className={styles.hero} aria-labelledby="hero-title">
-      <HeroNav />
       <div className={styles.copy} data-anim="hero-copy">
         <KineticTitle
           id="hero-title"
-          lines={['Cartela de', 'cores ACM']}
+          lines={['Catálogo de', 'cores ACM']}
           className={styles.title}
         />
         <div className={styles.side}>
           <p data-anim="hero-side">
             Lisas, brilho, metálicas e amadeiradas: <strong>{colors.length} cores de ACM</strong>{' '}
-            para fachadas e comunicação visual. Gire o leque e toque numa lâmina para ver a cor de
-            perto.
+            para fachadas e comunicação visual. Gire o leque e {finePointer ? 'clique' : 'toque'}{' '}
+            numa lâmina para ver a cor de perto.
           </p>
           <div className={styles.actions} data-anim="hero-side">
             <PlateLink href={`#${SECTION_IDS.catalog}`}>Ver as {colors.length} cores</PlateLink>

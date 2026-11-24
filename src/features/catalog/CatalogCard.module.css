@@ -55,11 +55,6 @@
   font-weight: 600;
 }
 
-.hex {
-  font-stretch: 80%;
-  font-variant-numeric: tabular-nums;
-}
-
 @media (max-width: 640px) {
   .name {
     font-size: 0.97rem;

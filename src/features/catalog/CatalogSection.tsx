@@ -44,7 +44,7 @@ export function CatalogSection({
     if (revealTriggers.current.length === 0) return
     for (const trigger of revealTriggers.current) trigger.kill()
     revealTriggers.current = []
-    gsap.set([...itemRefs.current.values()], { opacity: 1, y: 0, rotationX: 0 })
+    gsap.set([...itemRefs.current.values()], { opacity: 1, clearProps: 'transform' })
   }
 
   // Antes de mudar filtro ou busca, fotografa as posições atuais (técnica FLIP).
@@ -72,12 +72,11 @@ export function CatalogSection({
       Flip.from(state, {
         duration: 0.7,
         ease: 'power3.inOut',
-        absolute: true,
         stagger: 0.01,
         onEnter: (els) =>
           gsap.fromTo(
             els,
-            { opacity: 0, scale: 0.82, rotationX: -40 },
+            { opacity: 0, scale: 0.82, rotationX: -40, transformPerspective: 900 },
             {
               opacity: 1,
               scale: 1,
@@ -88,6 +87,7 @@ export function CatalogSection({
               ease: 'power3.out',
               stagger: 0.025,
               overwrite: true,
+              clearProps: 'transform',
             },
           ),
         onLeave: (els) =>
@@ -123,6 +123,8 @@ export function CatalogSection({
             ease: 'power3.out',
             stagger: 0.06,
             overwrite: true,
+            // No fim, tira o 3D que sobra: parado, ele só gasta memória de vídeo.
+            clearProps: 'transform',
           }),
       })
     },
@@ -144,8 +146,8 @@ export function CatalogSection({
         className={styles.header}
       >
         <p>
-          Fundo cinza neutro, como numa cabine de luz, para comparar os tons sem interferência.
-          Clique em uma placa para ampliar.
+          Fundo cinza neutro, como numa cabine de luz, para comparar os tons sem interferência.{' '}
+          {finePointer ? 'Clique' : 'Toque'} em uma placa para ampliar.
         </p>
       </SectionHeader>
 
@@ -158,7 +160,7 @@ export function CatalogSection({
         </p>
       </div>
 
-      <FilterBar colors={colors} value={filter} onChange={handleFilter} />
+      <FilterBar colors={colors} value={filter} query={query} onChange={handleFilter} />
 
       <ul className={styles.grid} aria-label="Cores da cartela">
         {colors.map((color) => (
